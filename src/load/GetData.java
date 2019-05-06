@@ -38,9 +38,11 @@ public class GetData extends TimerTask {
 			chromeOptions.addArguments("--disable-gpu");
 		}
 	
-
+ 
 	public void getdata(){
-		System.setProperty("webdriver.chrome.driver", "/Users/kuochungyu/Downloads/chromedriver"); // 設定要使用的webdriver exe file路徑
+		String home = System.getProperty("user.home");
+		String path = home + File.separator + "project2Data" + File.separator;
+		System.setProperty("webdriver.chrome.driver", path + "chromedriver"); // 設定要使用的webdriver exe file路徑
 		System.setProperty("webdriver.chrome.silentOutput", "true");
 		count = 0;
 		driver = new ChromeDriver();
@@ -57,7 +59,7 @@ public class GetData extends TimerTask {
 	//---------測試用，把所有的html source print出來方便爬element用，之後可以砍掉
 //		try {
 			today = new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime());
-			File todaydir = new File("/Users/kuochungyu/yoyo/"+today+"/NBA");
+			File todaydir = new File(path + today + File.separator + "NBA");
 			
 			if(!todaydir.exists()) todaydir.mkdirs();
 //			FileWriter fileWriter = new FileWriter(file);
@@ -91,11 +93,11 @@ public class GetData extends TimerTask {
 							+ "@" + teamname.get(count+1).getText() + "@moneyline:" + moneyline.get(count+1).getText()
 							+ "@handicap:" + handicap.get(count+1).getText() + "@total:" + total.get(count+1).getText().replace("\n", " ") + "\n";
             		try {
-            			File file = new File("/Users/kuochungyu/yoyo/"+today+"/NBA/game_at_" + teamname.get(count+1).getText() + ".txt");
+            			File file = new File(path + today + File.separator + "NBA" + File.separator + "game_at_" + teamname.get(count+1).getText() + ".txt");
             			if(!file.exists()){
             				file.createNewFile();
             			}
-            			writeText(writecontent, "/Users/kuochungyu/yoyo/"+today+"/NBA/game_at_" + teamname.get(count+1).getText() + ".txt", "utf8", true);
+            			writeText(writecontent, path + today + File.separator + "NBA" + File.separator + "game_at_" + teamname.get(count+1).getText() + ".txt", "utf8", true);
             		} catch (IOException e) {
             			e.printStackTrace();
             		}
@@ -116,21 +118,11 @@ public class GetData extends TimerTask {
 	*/
 	}
 	
-	public void testFileFolderMake() {
-	    today = new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime());
-//		File todaydir = new File("/Users/kuochungyu/yoyo/"+today+"/NBA");
-	    File todaydir = new File("/Users/kuochungyu/yoyo/"+today+"/NBA");
-	    boolean success = todaydir.mkdirs();
-	    System.out.println(success);
-	}
-	
-	public static void main(String args[])
-	{
+	public static void main(String args[]){
 		//-------主要呼叫抓data function的兩行，可以把main這個function取消掉然後在別的java class呼叫
 		Timer timer = new Timer();
 		timer.schedule(new GetData(), 1000, 30000);
 		//-------------------------------------------------------------------------
-//		new GetData().testFileFolderMake();
 	}
 	/*
 	 2018/3/3 Pony 

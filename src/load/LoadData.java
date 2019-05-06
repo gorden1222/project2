@@ -94,9 +94,11 @@ public class LoadData {
 		}
 		//-------主要呼叫抓data function的兩行，可以把main這個function取消掉然後在別的java class呼叫
 		today = new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime());
-		File NBAdirectory = new File("/Users/kuochungyu/yoyo/" + today + "/NBA");
-		File MLBdirectory = new File("/Users/kuochungyu/yoyo/" + today + "/MLB");
-		File NPBdirectory = new File("/Users/kuochungyu/yoyo/" + today + "/NPB");
+		String home = System.getProperty("user.home");
+		String path = home + File.separator + "project2Data" + File.separator;
+		File NBAdirectory = new File(path + today + File.separator + "NBA");
+		File MLBdirectory = new File(path + today + File.separator + "MLB");
+		File NPBdirectory = new File(path + today + File.separator + "NPB");
 		File[] fNBAList = NBAdirectory.listFiles();
 		File[] fMLBList = MLBdirectory.listFiles();
 		File[] fNPBList = NPBdirectory.listFiles();

@@ -43,7 +43,9 @@ public class GetMLBData extends TimerTask {
 	
 
 	public void getdata(){
-		System.setProperty("webdriver.chrome.driver", "/Users/kuochungyu/Downloads/chromedriver"); // 設定要使用的webdriver exe file路徑
+		String home = System.getProperty("user.home");
+		String path = home + File.separator + "project2Data" + File.separator;
+		System.setProperty("webdriver.chrome.driver", path + "chromedriver"); // 設定要使用的webdriver exe file路徑
 		System.setProperty("webdriver.chrome.silentOutput", "true");
 		count = 0;
 		driver = new ChromeDriver();
@@ -60,7 +62,7 @@ public class GetMLBData extends TimerTask {
 	//---------測試用，把所有的html source print出來方便爬element用，之後可以砍掉
 //		try {
 			today = new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime());
-			File todaydir = new File("/Users/kuochungyu/yoyo/"+today+"/MLB");
+			File todaydir = new File(path + today + File.separator + "MLB");
 			if(!todaydir.exists()) todaydir.mkdirs();
 //			FileWriter fileWriter = new FileWriter(file);
 //			fileWriter.write(s);
@@ -115,11 +117,10 @@ public class GetMLBData extends TimerTask {
 							+ "@" + writename + "@moneyline:" + moneyline.get(count+1).getText()
 							+ "@handicap:" + handicap.get(count+1).getText() + "@total:" + total.get(count+1).getText().replace("\n", " ") + "\n";
             		try {
-            			File file = new File("/Users/kuochungyu/yoyo/"+today+"/MLB/game_at_" + writename + ".txt");
+            			File file = new File(path + today + File.separator + "MLB" + File.separator + "game_at_" + writename + ".txt");
             			if(!file.exists()){
             				file.createNewFile();
             			}
-            			writeText(writecontent, "/Users/kuochungyu/yoyo/"+today+"/MLB/game_at_" + writename + ".txt", "utf8", true);
             		} catch (IOException e) {
             			e.printStackTrace();
             		}

@@ -43,7 +43,9 @@ public class GetNPBData extends TimerTask {
 	
 
 	public void getdata(){
-		System.setProperty("webdriver.chrome.driver", "/Users/kuochungyu/Downloads/chromedriver"); // 設定要使用的webdriver exe file路徑
+		String home = System.getProperty("user.home");
+		String path = home + File.separator + "project2Data" + File.separator;
+		System.setProperty("webdriver.chrome.driver", path + "chromedriver"); // 設定要使用的webdriver exe file路徑
 		System.setProperty("webdriver.chrome.silentOutput", "true");
 		count = 0;
 		driver = new ChromeDriver(chromeOptions);
@@ -60,7 +62,7 @@ public class GetNPBData extends TimerTask {
 	//---------測試用，把所有的html source print出來方便爬element用，之後可以砍掉
 //		try {
 			today = new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime());
-			File todaydir = new File("/Users/kuochungyu/yoyo/"+today+"/NPB");
+			File todaydir = new File(path + today + File.separator + "NPB");
 			if(!todaydir.exists()) todaydir.mkdirs();
 //			FileWriter fileWriter = new FileWriter(file);
 //			fileWriter.write(s);
@@ -115,11 +117,11 @@ public class GetNPBData extends TimerTask {
 							+ "@" + writename + "@moneyline:" + moneyline.get(count+1).getText()
 							+ "@handicap:" + handicap.get(count+1).getText() + "@total:" + total.get(count+1).getText().replace("\n", " ") + "\n";
             		try {
-            			File file = new File("/Users/kuochungyu/yoyo/"+today+"/NPB/game_at_" + writename + ".txt");
+            			File file = new File(path + today + File.separator + "NPB" + File.separator + "game_at_" + writename + ".txt");
             			if(!file.exists()){
             				file.createNewFile();
             			}
-            			writeText(writecontent, "/Users/kuochungyu/yoyo/"+today+"/NPB/game_at_" + writename + ".txt", "utf8", true);
+            			writeText(writecontent, path + today + File.separator + "NPB" + File.separator + "game_at_" + writename + ".txt", "utf8", true);
             		} catch (IOException e) {
             			e.printStackTrace();
             		}
