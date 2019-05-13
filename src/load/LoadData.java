@@ -41,9 +41,9 @@ public class LoadData {
 					JSONObject rtnObj = new JSONObject();
 					String[] dataArray = strLine.split("@");
 					for(int a=0;a< dataArray.length;a++)System.out.println(dataArray[a]);
-					dataDate = dataArray[0].split("_")[0];
-					dataTime = dataArray[0].split("_")[1];
-					Systime = dataArray[0].split("_")[2];
+//					dataDate = dataArray[0].split("_")[0];
+					dataTime = dataArray[0];
+//					Systime = dataArray[0].split("_")[2];
 					awayTeam = dataArray[1];
 					homeTeam = dataArray[5];
 					awayMoneyLineOdds = dataArray[2].split(":")[1];
@@ -55,9 +55,9 @@ public class LoadData {
 					homeHandicapOdds = dataArray[7].split(":")[1].split(" ")[1];
 					smallTotalOdds = dataArray[8].split(":")[1].split(" ")[2];
 					total = dataArray[8].split(":")[1].split(" ")[1];
-					rtnObj.put("dataDate", dataDate);
+//					rtnObj.put("dataDate", dataDate);
 					rtnObj.put("dataTime", dataTime);
-					rtnObj.put("sysTime", Systime);
+//					rtnObj.put("sysTime", Systime);
 					rtnObj.put("awayTeam", awayTeam);
 					rtnObj.put("awayMoneyLineOdds", awayMoneyLineOdds);
 					rtnObj.put("awayHandicap", awayHandicap);

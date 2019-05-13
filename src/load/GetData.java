@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -42,10 +43,12 @@ public class GetData extends TimerTask {
 	public void getdata(){
 		String home = System.getProperty("user.home");
 		String path = home + File.separator + "project2Data" + File.separator;
-		System.setProperty("webdriver.chrome.driver", path + "chromedriver"); // 設定要使用的webdriver exe file路徑
+		//======[Pony]Mac版把"chromedriver.exe"改回"chromedriver"就能用了
+		System.setProperty("webdriver.chrome.driver", path + "chromedriver.exe"); // 設定要使用的webdriver exe file路徑
+		
 		System.setProperty("webdriver.chrome.silentOutput", "true");
 		count = 0;
-		driver = new ChromeDriver();
+		driver = new ChromeDriver(chromeOptions);
 		WebDriverWait wait = new WebDriverWait(driver, 3); // wait for webdriver start working
 		driver.get("https://www.pinnacle.com/en/odds/match/basketball/usa/nba?sport=True"); // 設定webdriver要讀取的url名稱
 		System.out.println("##[Pony]Start getting source from betting website ");//屌之print step
@@ -81,13 +84,13 @@ public class GetData extends TimerTask {
 		
 	//-----------------編好寫入的檔案名稱、內容格式等並執行寫入function-----------	
         if (teamname.isEmpty()) {
-        	driver.quit();
-            throw new RuntimeException("No text area found");
+//        	driver.quit();
+       //     throw new RuntimeException("No text area found");
         }
         else {
             for (count = 0; count < teamname.size(); count ++ ){
-            	if(0 == (count % 2) && count < teamname.size()){
-            		writecontent = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime()) + "_" + System.currentTimeMillis()
+            	if(0 == (count % 2) && count < teamname.size()){//yyyy/MM/dd_HHmmss
+            		writecontent = new Date() // + "_" + System.currentTimeMillis()
 							+ "@" + teamname.get(count).getText() + "@moneyline:" + moneyline.get(count).getText()
 							+ "@handicap:" + handicap.get(count).getText() + "@total:" + total.get(count).getText().replace("\n", " ")
 							+ "@" + teamname.get(count+1).getText() + "@moneyline:" + moneyline.get(count+1).getText()
