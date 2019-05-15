@@ -39,7 +39,6 @@ public class GetData extends TimerTask {
 			chromeOptions.addArguments("--disable-gpu");
 		}
 	
- 
 	public void getdata(){
 		String home = System.getProperty("user.home");
 		String path = home + File.separator + "project2Data" + File.separator;
@@ -65,14 +64,6 @@ public class GetData extends TimerTask {
 			File todaydir = new File(path + today + File.separator + "NBA");
 			
 			if(!todaydir.exists()) todaydir.mkdirs();
-//			FileWriter fileWriter = new FileWriter(file);
-//			fileWriter.write(s);
-////			fileWriter.write("a test");
-//			fileWriter.flush();
-//			fileWriter.close();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
 	//---------測試用，把所有的html source print出來方便爬element用，之後可以砍掉	
 		
 	//------------獲取html語法中的各項所需之element----------------------		

@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Timer;
 
 import org.json.JSONArray;
@@ -14,18 +15,79 @@ import org.json.JSONObject;
 public class LoadData {
 
 	static String today;
+	static String yesterday;
 	
 	public static JSONArray LoadData(File file) throws Exception{
 		FileInputStream f = new FileInputStream(file);
 		BufferedReader br;
 		JSONArray rtnAry = new JSONArray();
+		System.out.println("[Pony] file = " + file.getPath());
+		yesterday = new SimpleDateFormat("yyyyMMdd").format(yesterday());
+		System.out.println("[Pony] yesterday = "+yesterday);
+		File yes_file = new File(file.getPath().replace(file.getPath().split("\\\\")[4], yesterday));
+		System.out.println("[Pony] Yesterday file = " + yes_file.getPath());
+		
 		try {
+			if(yes_file.exists()){
+				FileInputStream yes_f = new FileInputStream(yes_file);
+				BufferedReader yes_br = new BufferedReader(new InputStreamReader(yes_f));
+				String strLine= "";
+//				String dataDate = "";//資料日期
+				String dataTime = "";//資料時間
+//				String Systime = "";//系統時間(ms),for 圖表時間用
+				String homeTeam = "";//主場隊伍
+				String awayTeam = "";//客場隊伍
+				String awayMoneyLineOdds = "";//客隊moneyline賠率
+				String awayHandicapOdds = "";//客隊讓分賠率
+				String awayHandicap = "";//客隊讓分
+				String homeMoneyLineOdds = "";//主隊moneyline賠率
+				String homeHandicapOdds = "";//主隊讓分賠率
+				String homeHandicap = "";//主隊讓分
+				String bigTotalOdds = "";//大分賠率
+				String smallTotalOdds= "";//小分賠率
+				String total = "";//大小分
+				while((strLine = yes_br.readLine()) != null){
+					JSONObject rtnObj = new JSONObject();
+					String[] dataArray = strLine.split("@");
+					for(int a=0;a< dataArray.length;a++)System.out.println(dataArray[a]);
+//					dataDate = dataArray[0].split("_")[0];
+					dataTime = dataArray[0];
+//					Systime = dataArray[0].split("_")[2];
+					awayTeam = dataArray[1];
+					homeTeam = dataArray[5];
+					awayMoneyLineOdds = dataArray[2].split(":")[1];
+					awayHandicap = dataArray[3].split(":")[1].split(" ")[0];
+					awayHandicapOdds = dataArray[3].split(":")[1].split(" ")[1];
+					bigTotalOdds = dataArray[4].split(":")[1].split(" ")[2];
+					homeMoneyLineOdds = dataArray[6].split(":")[1];
+					homeHandicap = dataArray[7].split(":")[1].split(" ")[0];
+					homeHandicapOdds = dataArray[7].split(":")[1].split(" ")[1];
+					smallTotalOdds = dataArray[8].split(":")[1].split(" ")[2];
+					total = dataArray[8].split(":")[1].split(" ")[1];
+//					rtnObj.put("dataDate", dataDate);
+					rtnObj.put("dataTime", dataTime);
+//					rtnObj.put("sysTime", Systime);
+					rtnObj.put("awayTeam", awayTeam);
+					rtnObj.put("awayMoneyLineOdds", awayMoneyLineOdds);
+					rtnObj.put("awayHandicap", awayHandicap);
+					rtnObj.put("awayHandicapOdds", awayHandicapOdds);
+					rtnObj.put("homeTeam", homeTeam);
+					rtnObj.put("homeMoneyLineOdds", homeMoneyLineOdds);
+					rtnObj.put("homeHandicap", homeHandicap);
+					rtnObj.put("homeHandicapOdds", homeHandicapOdds);
+					rtnObj.put("total", total);
+					rtnObj.put("bigTotalOdds", bigTotalOdds);
+					rtnObj.put("smallTotalOdds", smallTotalOdds);
+					rtnAry.put(rtnObj);
+				}
+				yes_br.close();
+			}
 			if(file.exists()) {
 				br = new BufferedReader(new InputStreamReader(f));
 				String strLine= "";
-				String dataDate = "";//資料日期
+//				String dataDate = "";//資料日期
 				String dataTime = "";//資料時間
-				String Systime = "";//系統時間(ms),for 圖表時間用
+//				String Systime = "";//系統時間(ms),for 圖表時間用
 				String homeTeam = "";//主場隊伍
 				String awayTeam = "";//客場隊伍
 				String awayMoneyLineOdds = "";//客隊moneyline賠率
@@ -78,6 +140,12 @@ public class LoadData {
 			e.printStackTrace();
 		}
 		return rtnAry;
+	}
+	
+	private static Date yesterday() {
+	    final Calendar cal = Calendar.getInstance();
+	    cal.add(Calendar.DATE, -1);
+	    return cal.getTime();
 	}
 	
 	public static void main(String args[])

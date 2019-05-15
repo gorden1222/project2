@@ -112,8 +112,8 @@ public class GetNPBData extends TimerTask {
         else {
             for (count = 0; count < teamname.size(); count ++ ){
             	if(0 == (count % 2) && count < teamname.size()){
-            		String name = teamname.get(count).getText().split("\n")[0];
-            		String writename = teamname.get(count+1).getText().split("\n")[0];
+            		String name = teamname.get(count).getText().replace("\n","_");
+            		String writename = teamname.get(count+1).getText().replace("\n","_");
             		writecontent = new Date()  //+ "_" + System.currentTimeMillis()
 							+ "@" + name + "@moneyline:" + moneyline.get(count).getText()
 							+ "@handicap:" + handicap.get(count).getText() + "@total:" + total.get(count).getText().replace("\n", " ")

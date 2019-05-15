@@ -62,7 +62,7 @@ function GetData() {
     	url: "/project2/LoadDataServlet.do",
     	data:{
     		doAction:"loadData",
-    		type:"MLB"
+    		type:"NPB"
     	},
         dataType: "json",
         async: false,
@@ -594,7 +594,7 @@ $(document).ready(function () {
 	//init(); 
 	 // 開啟selenium抓資料function
 	//setTimeout(GetData, updateInterval);
-	 console.log("ShowLMBGame");
+	 console.log("ShowNPBGame");
 	 GetData();    
 });
 </script>
