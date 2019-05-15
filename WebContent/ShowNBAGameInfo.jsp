@@ -75,6 +75,7 @@ function GetData() {
         	console.log(length);
         	length = Object.keys(rtnData[0].result).length;
         	console.log(length);
+        	checkboxclick();
         	//alert(JSON.stringify(rtnData));
         	//setInterval(GetData, updateInterval);
         },
@@ -83,6 +84,82 @@ function GetData() {
             console.log("error");
         }
     });
+}
+
+function checkboxclick(){
+	var checkboxes = document.getElementsByTagName('input');
+	for(i = 0;i < checkboxes.length; i++){
+		console.log(checkboxes[i].id);
+		document.getElementById(checkboxes[i].id).onclick = function() {
+		    // access properties using this keyword
+		    if ( this.checked ) {
+		        console.log(this.id + "checked");
+		    	var awayRunlineSpan = document.getElementById(this.id + " Runline");
+		    	awayRunlineSpan.style.display = ''; 
+		    	var homeRunlineSpan = document.getElementById(this.name + " Runline");
+		    	homeRunlineSpan.style.display = ''; 
+		    	
+		    	var awayMoneylineSpan = document.getElementById(this.id + " Moneyline");
+		    	awayMoneylineSpan.style.display = ''; 
+		    	var homeMoneylineSpan = document.getElementById(this.name + " Moneyline");
+		    	homeMoneylineSpan.style.display = ''; 
+		    	
+				var total_upSpan = document.getElementById(this.id + "V.S" + this.name + " total_up");
+				total_upSpan.style.display = '';
+				var total_lowSpan = document.getElementById(this.id + "V.S" + this.name + " total_low");
+				total_lowSpan.style.display = '';
+				
+				var away_rundiv = document.getElementById(this.id+"runline");
+				away_rundiv.style.display = '';
+				var home_rundiv = document.getElementById(this.name+"runline");
+				home_rundiv.style.display = '';
+				
+				var away_moneydiv = document.getElementById(this.id+"moneyline");
+				away_moneydiv.style.display = '';
+				var home_moneydiv = document.getElementById(this.name+"moneyline");
+				home_moneydiv.style.display = '';
+				
+				var total_up_div = document.getElementById((this.value)+ "_total_up");
+				total_up_div.style.display = '';
+				var total_low_div = document.getElementById((this.value) + "_total_low");
+				total_low_div.style.display = '';
+				
+		    } else {
+		    	console.log(this.id + "unchecked");
+		    	var awayRunlineSpan = document.getElementById(this.id + " Runline");
+		    	awayRunlineSpan.style.display = 'none'; 
+		    	var homeRunlineSpan = document.getElementById(this.name + " Runline");
+		    	homeRunlineSpan.style.display = 'none'; 
+		    	
+		    	var awayMoneylineSpan = document.getElementById(this.id + " Moneyline");
+		    	awayMoneylineSpan.style.display = 'none'; 
+		    	var homeMoneylineSpan = document.getElementById(this.name + " Moneyline");
+		    	homeMoneylineSpan.style.display = 'none'; 
+		    	
+				var total_upSpan = document.getElementById(this.id + "V.S" + this.name + " total_up");
+				total_upSpan.style.display = 'none';
+				var total_lowSpan = document.getElementById(this.id + "V.S" + this.name + " total_low");
+				total_lowSpan.style.display = 'none';
+				
+				var away_rundiv = document.getElementById(this.id+"runline");
+				away_rundiv.style.display = 'none';
+				var home_rundiv = document.getElementById(this.name+"runline");
+				home_rundiv.style.display = 'none';
+				
+				var away_moneydiv = document.getElementById(this.id+"moneyline");
+				away_moneydiv.style.display = 'none';
+				var home_moneydiv = document.getElementById(this.name+"moneyline");
+				home_moneydiv.style.display = 'none';
+				
+				var total_up_div = document.getElementById((this.value)+ "_total_up");
+				total_up_div.style.display = 'none';
+				var total_low_div = document.getElementById((this.value) + "_total_low");
+				total_low_div.style.display = 'none';
+
+		        
+		    }
+		};
+	}
 }
 
 var temp;
@@ -109,10 +186,13 @@ function update(_data) {
 			
 		var btn = document.createElement("INPUT");   // Create a <button> element
 		btn.setAttribute("type", "checkbox");
-		btn.setAttribute("checked", "false");
+		btn.setAttribute("checked", "true");
 		btn.setAttribute("value", i);
-		btn.setAttribute("id", _data[i].result[0].awayTeam);
-		btn.setAttribute("name", _data[i].result[0].homeTeam);
+		//btn.setAttribute("id", _data[i].result[0].awayTeam);
+		//btn.setAttribute("name", _data[i].result[0].homeTeam);
+		btn.id = _data[i].result[0].awayTeam;
+		btn.name = _data[i].result[0].homeTeam;
+		btn.checked = true;
 		btn.setAttribute("align", "center");
 		btn.setAttribute("style", "width:20px;height:20px;");
 		//btn.setAttribute("value", _data[i].result[0].awayTeam + "V.S" + _data[i].result[0].homeTeam);
@@ -181,7 +261,7 @@ function update(_data) {
 		total_upSpan.appendChild(document.createTextNode((_data[i].result[0].awayTeam + "V.S" + _data[i].result[0].homeTeam) + " total_up"));
 		document.body.appendChild(total_upSpan); 
 		var total_up_div = document.createElement("div");
-		total_up_div.setAttribute("id","total_up");
+		total_up_div.setAttribute("id",i + "_total_up");
 		total_up_div.setAttribute("style","height: 600px");
 		document.body.appendChild(total_up_div);
 		
@@ -192,7 +272,7 @@ function update(_data) {
 		total_lowSpan.appendChild(document.createTextNode((_data[i].result[0].awayTeam + "V.S" + _data[i].result[0].homeTeam) + " total_low"));
 		document.body.appendChild(total_lowSpan); 
 		var total_low_div = document.createElement("div");
-		total_low_div.setAttribute("id","total_low");
+		total_low_div.setAttribute("id",i + "_total_low");
 		total_low_div.setAttribute("style","height: 600px");
 		document.body.appendChild(total_low_div);
 		var runlinechartData = [],moneylinechartdata = [],totallinechartdata=[];
@@ -375,8 +455,8 @@ function update(_data) {
 		CreateChart(_data[i].result[0].awayTeam+"runline",awaymoneyline);
 		CreateChart(_data[i].result[0].homeTeam+"runline",homemoneyline);
 		
-		CreateChart("total_up",totalpoint_up);
-		CreateChart("total_low",totalpoint_low);
+		CreateChart(i + "_total_up",totalpoint_up);
+		CreateChart(i + "_total_low",totalpoint_low);
 		var br =  document.createElement("br");
 		document.body.appendChild(br);
 		//======[Pony]將資料以及div name輸入到生成chart的 function========

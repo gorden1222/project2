@@ -75,6 +75,7 @@ function GetData() {
         	console.log(length);
         	length = Object.keys(rtnData[0].result).length;
         	console.log(length);
+        	checkboxclick();
         	//alert(JSON.stringify(rtnData));
         	//setInterval(GetData, updateInterval);
         },
@@ -86,6 +87,81 @@ function GetData() {
 }
 
 var temp;
+function checkboxclick(){
+	var checkboxes = document.getElementsByTagName('input');
+	for(i = 0;i < checkboxes.length; i++){
+		console.log(checkboxes[i].id);
+		document.getElementById(checkboxes[i].id).onclick = function() {
+		    // access properties using this keyword
+		    if ( this.checked ) {
+		        console.log(this.id + "checked");
+		    	var awayRunlineSpan = document.getElementById(this.id + " Runline");
+		    	awayRunlineSpan.style.display = ''; 
+		    	var homeRunlineSpan = document.getElementById(this.name + " Runline");
+		    	homeRunlineSpan.style.display = ''; 
+		    	
+		    	var awayMoneylineSpan = document.getElementById(this.id + " Moneyline");
+		    	awayMoneylineSpan.style.display = ''; 
+		    	var homeMoneylineSpan = document.getElementById(this.name + " Moneyline");
+		    	homeMoneylineSpan.style.display = ''; 
+		    	
+				var total_upSpan = document.getElementById(this.id + "V.S" + this.name + " total_up");
+				total_upSpan.style.display = '';
+				var total_lowSpan = document.getElementById(this.id + "V.S" + this.name + " total_low");
+				total_lowSpan.style.display = '';
+				
+				var away_rundiv = document.getElementById(this.id+"runline");
+				away_rundiv.style.display = '';
+				var home_rundiv = document.getElementById(this.name+"runline");
+				home_rundiv.style.display = '';
+				
+				var away_moneydiv = document.getElementById(this.id+"moneyline");
+				away_moneydiv.style.display = '';
+				var home_moneydiv = document.getElementById(this.name+"moneyline");
+				home_moneydiv.style.display = '';
+				
+				var total_up_div = document.getElementById((this.value)+ "_total_up");
+				total_up_div.style.display = '';
+				var total_low_div = document.getElementById((this.value) + "_total_low");
+				total_low_div.style.display = '';
+				
+		    } else {
+		    	console.log(this.id + "unchecked");
+		    	var awayRunlineSpan = document.getElementById(this.id + " Runline");
+		    	awayRunlineSpan.style.display = 'none'; 
+		    	var homeRunlineSpan = document.getElementById(this.name + " Runline");
+		    	homeRunlineSpan.style.display = 'none'; 
+		    	
+		    	var awayMoneylineSpan = document.getElementById(this.id + " Moneyline");
+		    	awayMoneylineSpan.style.display = 'none'; 
+		    	var homeMoneylineSpan = document.getElementById(this.name + " Moneyline");
+		    	homeMoneylineSpan.style.display = 'none'; 
+		    	
+				var total_upSpan = document.getElementById(this.id + "V.S" + this.name + " total_up");
+				total_upSpan.style.display = 'none';
+				var total_lowSpan = document.getElementById(this.id + "V.S" + this.name + " total_low");
+				total_lowSpan.style.display = 'none';
+				
+				var away_rundiv = document.getElementById(this.id+"runline");
+				away_rundiv.style.display = 'none';
+				var home_rundiv = document.getElementById(this.name+"runline");
+				home_rundiv.style.display = 'none';
+				
+				var away_moneydiv = document.getElementById(this.id+"moneyline");
+				away_moneydiv.style.display = 'none';
+				var home_moneydiv = document.getElementById(this.name+"moneyline");
+				home_moneydiv.style.display = 'none';
+				
+				var total_up_div = document.getElementById((this.value)+ "_total_up");
+				total_up_div.style.display = 'none';
+				var total_low_div = document.getElementById((this.value) + "_total_low");
+				total_low_div.style.display = 'none';
+
+		        
+		    }
+		};
+	}
+}
 
 function update(_data) {
 
@@ -107,7 +183,7 @@ function update(_data) {
 		textdiv.setAttribute("style","height: 250px;width: 100%;");
 		
 			
-		var btn = document.createElement("INPUT");   // Create a <button> element
+		var btn = document.createElement("input");   // Create a <button> element
 		btn.setAttribute("type", "checkbox");
 		btn.setAttribute("checked", "false");
 		btn.setAttribute("value", i);
@@ -196,7 +272,7 @@ function update(_data) {
 		total_low_div.setAttribute("style","height: 600px");
 		document.body.appendChild(total_low_div);
 		var runlinechartData = [],moneylinechartdata = [],totallinechartdata=[];
-		console.log("result.length = " + Object.keys(_data[i].result).length);
+		//console.log("result.length = " + Object.keys(_data[i].result).length);
 		//==============[Pony]Create Charts DIV=================
 			
 			
