@@ -37,15 +37,15 @@ public class LoadData {
 //				String Systime = "";//系統時間(ms),for 圖表時間用
 				String homeTeam = "";//主場隊伍
 				String awayTeam = "";//客場隊伍
-				String awayMoneyLineOdds = "";//客隊moneyline賠率
-				String awayHandicapOdds = "";//客隊讓分賠率
-				String awayHandicap = "";//客隊讓分
-				String homeMoneyLineOdds = "";//主隊moneyline賠率
-				String homeHandicapOdds = "";//主隊讓分賠率
-				String homeHandicap = "";//主隊讓分
-				String bigTotalOdds = "";//大分賠率
-				String smallTotalOdds= "";//小分賠率
-				String total = "";//大小分
+				String awayMoneyLineOdds = "" , lastawayMoneyLineOdds = "";//客隊moneyline賠率
+				String awayHandicapOdds = "" , lastawayHandicapOdds = "";//客隊讓分賠率
+				String awayHandicap = "" , lastawayHandicap = "";//客隊讓分
+				String homeMoneyLineOdds = "" , lasthomeMoneyLineOdds = "";//主隊moneyline賠率
+				String homeHandicapOdds = "" , lasthomeHandicapOdds = "";//主隊讓分賠率
+				String homeHandicap = "" , lasthomeHandicap = "";//主隊讓分
+				String bigTotalOdds = "" , lastbigTotalOdds = "";//大分賠率
+				String smallTotalOdds= "" , lastsmallTotalOdds = "";//小分賠率
+				String total = "" , lasttotal = "";//大小分
 				while((strLine = yes_br.readLine()) != null){
 					JSONObject rtnObj = new JSONObject();
 					String[] dataArray = strLine.split("@");
@@ -64,21 +64,38 @@ public class LoadData {
 					homeHandicapOdds = dataArray[7].split(":")[1].split(" ")[1];
 					smallTotalOdds = dataArray[8].split(":")[1].split(" ")[2];
 					total = dataArray[8].split(":")[1].split(" ")[1];
-//					rtnObj.put("dataDate", dataDate);
-					rtnObj.put("dataTime", dataTime);
-//					rtnObj.put("sysTime", Systime);
-					rtnObj.put("awayTeam", awayTeam);
-					rtnObj.put("awayMoneyLineOdds", awayMoneyLineOdds);
-					rtnObj.put("awayHandicap", awayHandicap);
-					rtnObj.put("awayHandicapOdds", awayHandicapOdds);
-					rtnObj.put("homeTeam", homeTeam);
-					rtnObj.put("homeMoneyLineOdds", homeMoneyLineOdds);
-					rtnObj.put("homeHandicap", homeHandicap);
-					rtnObj.put("homeHandicapOdds", homeHandicapOdds);
-					rtnObj.put("total", total);
-					rtnObj.put("bigTotalOdds", bigTotalOdds);
-					rtnObj.put("smallTotalOdds", smallTotalOdds);
-					rtnAry.put(rtnObj);
+					if(!lastawayMoneyLineOdds.equals(awayMoneyLineOdds) || !lastawayHandicap.equals(awayHandicap)
+					   || !lastawayHandicapOdds.equals(awayHandicapOdds) || !lastbigTotalOdds.equals(bigTotalOdds)
+					   || !lasthomeMoneyLineOdds.equals(homeMoneyLineOdds) || !lasthomeHandicap.equals(homeHandicap)
+					   || !lasthomeHandicapOdds.equals(homeHandicapOdds) || !lastsmallTotalOdds.equals(smallTotalOdds)
+					   || !lasttotal.equals(total))
+					{
+//						rtnObj.put("dataDate", dataDate);
+						rtnObj.put("dataTime", dataTime);
+//						rtnObj.put("sysTime", Systime);
+						rtnObj.put("awayTeam", awayTeam);
+						rtnObj.put("awayMoneyLineOdds", awayMoneyLineOdds);
+						rtnObj.put("awayHandicap", awayHandicap);
+						rtnObj.put("awayHandicapOdds", awayHandicapOdds);
+						rtnObj.put("homeTeam", homeTeam);
+						rtnObj.put("homeMoneyLineOdds", homeMoneyLineOdds);
+						rtnObj.put("homeHandicap", homeHandicap);
+						rtnObj.put("homeHandicapOdds", homeHandicapOdds);
+						rtnObj.put("total", total);
+						rtnObj.put("bigTotalOdds", bigTotalOdds);
+						rtnObj.put("smallTotalOdds", smallTotalOdds);
+						rtnAry.put(rtnObj);
+						lastawayMoneyLineOdds = awayMoneyLineOdds;
+						lastawayHandicap = awayHandicap;
+						lastawayHandicapOdds = awayHandicapOdds;
+						lastbigTotalOdds = bigTotalOdds;
+						lasthomeMoneyLineOdds = homeMoneyLineOdds;
+						lasthomeHandicap = homeHandicap;
+						lasthomeHandicapOdds = homeHandicapOdds;
+						lastsmallTotalOdds = smallTotalOdds;
+						lasttotal = total;
+					}
+
 				}
 				yes_br.close();
 			}

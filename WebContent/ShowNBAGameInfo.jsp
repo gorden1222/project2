@@ -354,32 +354,36 @@ function update(_data) {
 			    	value:_data[i].result[j].homeMoneyLineOdds
 			    });
 			    	
-				if(_data[i].result[j].awayHandicapOdds != _data[i].result[j-1].awayHandicapOdds)
+				if(_data[i].result[j].awayHandicapOdds != _data[i].result[j-1].awayHandicapOdds
+				  ||_data[i].result[j].awayHandicap != _data[i].result[j-1].awayHandicap)
 			    
 			    awayhandicap.push({
 			    	time:_data[i].result[j].dataTime,
 			    	value:_data[i].result[j].awayHandicapOdds
 			    });
 			    
-				if(_data[i].result[j].homeHandicapOdds != _data[i].result[j-1].homeHandicapOdds)
+				if(_data[i].result[j].homeHandicapOdds != _data[i].result[j-1].homeHandicapOdds
+				  || _data[i].result[j].homeHandicap != _data[i].result[j-1].homeHandicap)
 			    homehandicap.push({
 			    	time:_data[i].result[j].dataTime,
 			    	value:_data[i].result[j].homeHandicapOdds
 			    });
 			    
-				if(_data[i].result[j].bigTotalOdds != _data[i].result[j-1].bigTotalOdds)
+				if(_data[i].result[j].bigTotalOdds != _data[i].result[j-1].bigTotalOdds
+				 || _data[i].result[j].total != _data[i].result[j-1].total)
 			    totalpoint_up.push({
 			    	time:_data[i].result[j].dataTime,
 			    	value:_data[i].result[j].bigTotalOdds
 			    });
 			    
-				if(_data[i].result[j].smallTotalOdds != _data[i].result[j-1].smallTotalOdds)
+				if(_data[i].result[j].smallTotalOdds != _data[i].result[j-1].smallTotalOdds
+				  || _data[i].result[j].total != _data[i].result[j-1].total)
 			    totalpoint_low.push({
 			    	time:_data[i].result[j].dataTime,
 			    	value:_data[i].result[j].smallTotalOdds
 			    });
 			    
-			} else{
+			}else{
 			    moneyline.push({
 			    	time:_data[i].result[j].dataTime,
 			    	away:_data[i].result[j].awayMoneyLineOdds,
@@ -481,13 +485,13 @@ function CreateChart(divname,datas) {
 	//chart.dateFormatter.inputDateFormat = "yyyy-MM-dd";
 	var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
 	dateAxis.baseInterval = {
-	  "timeUnit": "minute",
+	  "timeUnit": "second",
 	  "count": 1
 	};
 	//dateAxis.baseUnit = "second";
 	dateAxis.title.text = "time";
 	//chart.durationFormatter.durationFormat = "hh 'hours' mm 'minutes' ss 'seconds'";
-	dateAxis.tooltipDateFormat = "HH:mm, d MMMM";
+	dateAxis.tooltipDateFormat = "HH:mm:ss, d MMMM";
 
 	// Create axes
 	//var dateAxis = chart.xAxes.push(new am4charts.DurationAxis());

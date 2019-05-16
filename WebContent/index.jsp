@@ -260,6 +260,7 @@ $(document).ready(function () {
 
 	$('#npb').click(function(){
 	    console.log("NPB logo onclick");
+	    window.open('http://localhost:8080/project2/ShowNPBGameInfo.jsp', '_blank');
 	});
 	
 	$('#kbo').click(function(){
