@@ -265,6 +265,7 @@ $(document).ready(function () {
 	
 	$('#kbo').click(function(){
 	    console.log("KBO logo onclick");
+	    window.open('http://localhost:8080/project2/ShowKBOGameInfo.jsp', '_blank');
 	});
 });
 

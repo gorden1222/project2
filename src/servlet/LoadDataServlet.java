@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONObject;
 
 import load.GetData;
+import load.GetKBOData;
 import load.GetMLBData;
 import load.GetNPBData;
 import load.LoadData;
@@ -45,6 +46,7 @@ public class LoadDataServlet extends HttpServlet{
 			timer.schedule(new GetData(), 1000, 60000);
 			timer.schedule(new GetMLBData(), 1000, 60000);
 			timer.schedule(new GetNPBData(), 1000, 60000);
+			timer.schedule(new GetKBOData(), 1000, 60000);
 			try {
 				Thread.sleep(15000);
 			} catch (InterruptedException e) {
@@ -74,6 +76,7 @@ public class LoadDataServlet extends HttpServlet{
 			timer.schedule(new GetData(), 1000, 60000);
 			timer.schedule(new GetMLBData(), 1000, 60000);
 			timer.schedule(new GetNPBData(), 1000, 60000);
+			timer.schedule(new GetKBOData(), 1000, 60000);
 			try {
 				Thread.sleep(15000);
 			} catch (InterruptedException e) {
