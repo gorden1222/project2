@@ -3,6 +3,7 @@ package load;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -26,7 +27,7 @@ public class LoadData {
 		System.out.println("[Pony] yesterday = "+yesterday);
 		File yes_file = new File(file.getPath().replace(file.getPath().split("\\\\")[4], yesterday));
 		System.out.println("[Pony] Yesterday file = " + yes_file.getPath());
-		
+		Deletecloseddata(file);
 		try {
 			if(yes_file.exists()){
 				FileInputStream yes_f = new FileInputStream(yes_file);
@@ -163,6 +164,36 @@ public class LoadData {
 	    final Calendar cal = Calendar.getInstance();
 	    cal.add(Calendar.DATE, -1);
 	    return cal.getTime();
+	}
+	private static void Deletecloseddata(File file){
+		
+		for(int i = 3;i <= 7; i++){
+		    final Calendar cal = Calendar.getInstance();
+		    cal.add(Calendar.DATE, -i);
+			String date = new SimpleDateFormat("yyyyMMdd").format(cal.getTime());
+			System.out.println("[Pony] date = "+date);
+			String delfileStr = file.getPath().replace(file.getPath().split("\\\\")[4], date);
+			delfileStr = delfileStr.replace(delfileStr.split("\\\\")[6], "\\");
+			File del_file = new File(delfileStr);
+			System.out.println("[Pony] del_file = "+del_file.getPath());
+			if(del_file.exists()){
+				if (del_file.isDirectory()) {
+					System.out.println("[Pony] del_file.isDirectory()");
+				    File[] entries = del_file.listFiles();
+				    if (entries != null) {
+				      for (File entry : entries) {
+				    	  System.out.println("[Pony] delete entry");
+				    	  if (!entry.delete()) {
+				    		  	System.out.println("Failed to delete " + entry);
+							  }
+				      }
+				    }
+				  }
+				  if (!del_file.delete()) {
+					  System.out.println("Failed to delete " + del_file);
+				  }
+			}
+		}
 	}
 	
 	public static void main(String args[])

@@ -499,7 +499,7 @@ function CreateChart(divname,datas) {
 	series.dataFields.dateX = "time";
 	//series.tooltipText = "{value: [bold]{valueY}[/]}";
 	
-	series.tooltipText = "123";//[Pony]改這個可以修改滑鼠放在每個點上面時該顯示甚麼資料
+	series.tooltipText = "{dateX}: {valueY}";//[Pony]改這個可以修改滑鼠放在每個點上面時該顯示甚麼資料
 	
 	series.fillOpacity = 0.3;
 	//series.strokeWidth = 2;
