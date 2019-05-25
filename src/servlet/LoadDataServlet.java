@@ -27,6 +27,7 @@ public class LoadDataServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	private String today = "";
 	private boolean isspidering = false;
+	private Timer timer;
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 		      throws ServletException, IOException {
@@ -41,18 +42,34 @@ public class LoadDataServlet extends HttpServlet{
 			System.out.println("isSpidering = "+isspidering);
 		} else if ("startGetData".equals(doAction)) {
 			System.out.println("startGetData");
-			isspidering = true;
-			Timer timer = new Timer();
-			timer.schedule(new GetData(), 1000, 60000);
-			timer.schedule(new GetMLBData(), 1000, 60000);
-			timer.schedule(new GetNPBData(), 1000, 60000);
-			timer.schedule(new GetKBOData(), 1000, 60000);
-			try {
-				Thread.sleep(15000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if(!isspidering){
+				isspidering = true;
+				timer = new Timer();
+				timer.schedule(new GetData(), 1000, 60000);
+				timer.schedule(new GetMLBData(), 1000, 60000);
+				timer.schedule(new GetNPBData(), 1000, 60000);
+				timer.schedule(new GetKBOData(), 1000, 60000);
+				try {
+					Thread.sleep(15000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}else System.out.println("Already Started!");
+
+		} else if ("stopGetData".equals(doAction)) {
+			System.out.println("stopGetData");
+			if(isspidering){
+				isspidering = false;
+				timer.cancel();
+				try {
+					Thread.sleep(15000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
+
 		}
 		PrintWriter out = response.getWriter();
 		out.println(json.toString());		

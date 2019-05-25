@@ -18,7 +18,7 @@
 <script type="text/javascript" src="https://www.amcharts.com/lib/4/themes/spiritedaway.js"></script>
 <script type="text/javascript" src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
 <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
-<title>Insert title here</title>
+<title>Show NBA Charts</title>
 
 <!-- Chart code -->
 <script>
@@ -285,7 +285,7 @@ function update(_data) {
 		for(j=0;j<Object.keys(_data[i].result).length;j++){
 			
 			if(j == 0){
-				
+				console.log(_data[i].result[j].dataTime);
 			    moneyline.push({
 			    	time:_data[i].result[j].dataTime,
 			    	away:_data[i].result[j].awayMoneyLineOdds,

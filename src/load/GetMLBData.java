@@ -31,6 +31,8 @@ public class GetMLBData extends TimerTask {
 	static int count = 0;
 	static String writecontent = "";
 	static String today;
+	static final String CHROME_WINDOWS = "chromedriver.exe";
+	static final String CHROME_MAC = "chromedriver";
 	
 	public static class PinnacleGet {
 
@@ -45,11 +47,13 @@ public class GetMLBData extends TimerTask {
 
 	public void getdata(){
 		String home = System.getProperty("user.home");
-		System.out.println("[Pony] : "+home);
+		String os = System.getProperty("os.name");
+//		System.out.println("[Pony] : "+home);
 		String path = home + File.separator + "project2Data" + File.separator;
-		System.out.println("[Pony] : "+path);
+		System.out.println("[Pony] : "+os);
 		//======[Pony]Mac版把"chromedriver.exe"改回"chromedriver"就能用了
-		System.setProperty("webdriver.chrome.driver", path + "chromedriver.exe"); // 設定要使用的webdriver exe file路徑
+		if(os.contains("indows"))System.setProperty("webdriver.chrome.driver", path + CHROME_WINDOWS); // 設定要使用的webdriver exe file路徑
+		else System.setProperty("webdriver.chrome.driver", path + CHROME_MAC);
 		
 		System.setProperty("webdriver.chrome.silentOutput", "true");
 		count = 0;
@@ -116,7 +120,7 @@ public class GetMLBData extends TimerTask {
             	if(0 == (count % 2) && count < teamname.size()){
             		String name = teamname.get(count).getText().replace("\n","_");
             		String writename = teamname.get(count+1).getText().replace("\n","_");
-            		writecontent = new Date() //+ "_" + System.currentTimeMillis()
+            		writecontent = new Date() + "_" + (new Date().getTime())/1000
 							+ "@" + name + "@moneyline:" + moneyline.get(count).getText()
 							+ "@handicap:" + handicap.get(count).getText() + "@total:" + total.get(count).getText().replace("\n", " ")
 							+ "@" + writename + "@moneyline:" + moneyline.get(count+1).getText()

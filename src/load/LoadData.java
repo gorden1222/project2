@@ -23,9 +23,10 @@ public class LoadData {
 		BufferedReader br;
 		JSONArray rtnAry = new JSONArray();
 		System.out.println("[Pony] file = " + file.getPath());
+		today = new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime());
 		yesterday = new SimpleDateFormat("yyyyMMdd").format(yesterday());
 		System.out.println("[Pony] yesterday = "+yesterday);
-		File yes_file = new File(file.getPath().replace(file.getPath().split("\\\\")[4], yesterday));
+		File yes_file = new File(file.getPath().replace(today, yesterday));
 		System.out.println("[Pony] Yesterday file = " + yes_file.getPath());
 		Deletecloseddata(file);
 		try {
@@ -35,7 +36,7 @@ public class LoadData {
 				String strLine= "";
 //				String dataDate = "";//資料日期
 				String dataTime = "";//資料時間
-//				String Systime = "";//系統時間(ms),for 圖表時間用
+				String dataSecond = "";//系統時間(ms),for 圖表時間用
 				String homeTeam = "";//主場隊伍
 				String awayTeam = "";//客場隊伍
 				String awayMoneyLineOdds = "" , lastawayMoneyLineOdds = "";//客隊moneyline賠率
@@ -50,10 +51,10 @@ public class LoadData {
 				while((strLine = yes_br.readLine()) != null){
 					JSONObject rtnObj = new JSONObject();
 					String[] dataArray = strLine.split("@");
-					for(int a=0;a< dataArray.length;a++)System.out.println(dataArray[a]);
+				//	for(int a=0;a< dataArray.length;a++)System.out.println(dataArray[a]);
 //					dataDate = dataArray[0].split("_")[0];
-					dataTime = dataArray[0];
-//					Systime = dataArray[0].split("_")[2];
+					dataTime = dataArray[0].split("_")[0];
+					dataSecond = dataArray[0].split("_")[1];
 					awayTeam = dataArray[1];
 					homeTeam = dataArray[5];
 					awayMoneyLineOdds = dataArray[2].split(":")[1];
@@ -73,7 +74,7 @@ public class LoadData {
 					{
 //						rtnObj.put("dataDate", dataDate);
 						rtnObj.put("dataTime", dataTime);
-//						rtnObj.put("sysTime", Systime);
+						rtnObj.put("dataSecond", dataSecond);
 						rtnObj.put("awayTeam", awayTeam);
 						rtnObj.put("awayMoneyLineOdds", awayMoneyLineOdds);
 						rtnObj.put("awayHandicap", awayHandicap);
@@ -105,6 +106,7 @@ public class LoadData {
 				String strLine= "";
 //				String dataDate = "";//資料日期
 				String dataTime = "";//資料時間
+				String dataSecond = "";
 //				String Systime = "";//系統時間(ms),for 圖表時間用
 				String homeTeam = "";//主場隊伍
 				String awayTeam = "";//客場隊伍
@@ -122,7 +124,8 @@ public class LoadData {
 					String[] dataArray = strLine.split("@");
 					for(int a=0;a< dataArray.length;a++)System.out.println(dataArray[a]);
 //					dataDate = dataArray[0].split("_")[0];
-					dataTime = dataArray[0];
+					dataTime = dataArray[0].split("_")[0];
+					dataSecond = dataArray[0].split("_")[1];
 //					Systime = dataArray[0].split("_")[2];
 					awayTeam = dataArray[1];
 					homeTeam = dataArray[5];
@@ -137,7 +140,7 @@ public class LoadData {
 					total = dataArray[8].split(":")[1].split(" ")[1];
 //					rtnObj.put("dataDate", dataDate);
 					rtnObj.put("dataTime", dataTime);
-//					rtnObj.put("sysTime", Systime);
+					rtnObj.put("dataSecond", dataSecond);
 					rtnObj.put("awayTeam", awayTeam);
 					rtnObj.put("awayMoneyLineOdds", awayMoneyLineOdds);
 					rtnObj.put("awayHandicap", awayHandicap);
@@ -166,34 +169,38 @@ public class LoadData {
 	    return cal.getTime();
 	}
 	private static void Deletecloseddata(File file){
-		
-		for(int i = 3;i <= 7; i++){
-		    final Calendar cal = Calendar.getInstance();
-		    cal.add(Calendar.DATE, -i);
-			String date = new SimpleDateFormat("yyyyMMdd").format(cal.getTime());
-			System.out.println("[Pony] date = "+date);
-			String delfileStr = file.getPath().replace(file.getPath().split("\\\\")[4], date);
-			delfileStr = delfileStr.replace(delfileStr.split("\\\\")[6], "\\");
-			File del_file = new File(delfileStr);
-			System.out.println("[Pony] del_file = "+del_file.getPath());
-			if(del_file.exists()){
-				if (del_file.isDirectory()) {
-					System.out.println("[Pony] del_file.isDirectory()");
-				    File[] entries = del_file.listFiles();
-				    if (entries != null) {
-				      for (File entry : entries) {
-				    	  System.out.println("[Pony] delete entry");
-				    	  if (!entry.delete()) {
-				    		  	System.out.println("Failed to delete " + entry);
-							  }
-				      }
-				    }
-				  }
-				  if (!del_file.delete()) {
-					  System.out.println("Failed to delete " + del_file);
-				  }
+		try{
+			for(int i = 3;i <= 7; i++){
+			    final Calendar cal = Calendar.getInstance();
+			    cal.add(Calendar.DATE, -i);
+				String date = new SimpleDateFormat("yyyyMMdd").format(cal.getTime());
+				System.out.println("[Pony] date = "+date);
+				String delfileStr = file.getPath().replace(today, date);
+				delfileStr = delfileStr.replace(delfileStr.split("////")[6], "//");
+				File del_file = new File(delfileStr);
+				System.out.println("[Pony] del_file = "+del_file.getPath());
+				if(del_file.exists()){
+					if (del_file.isDirectory()) {
+						System.out.println("[Pony] del_file.isDirectory()");
+					    File[] entries = del_file.listFiles();
+					    if (entries != null) {
+					      for (File entry : entries) {
+					    	  System.out.println("[Pony] delete entry");
+					    	  if (!entry.delete()) {
+					    		  	System.out.println("Failed to delete " + entry);
+								  }
+					      }
+					    }
+					  }
+					  if (!del_file.delete()) {
+						  System.out.println("Failed to delete " + del_file);
+					  }
+				}
 			}
+		}catch (Exception e){
+			e.printStackTrace();
 		}
+
 	}
 	
 	public static void main(String args[])

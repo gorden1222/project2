@@ -18,7 +18,7 @@
 <script type="text/javascript" src="https://www.amcharts.com/lib/4/themes/spiritedaway.js"></script>
 <script type="text/javascript" src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
 <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
-<title>Insert title here</title>
+<title>Show Korea Baseball Charts</title>
 
 <!-- Chart code -->
 <script>

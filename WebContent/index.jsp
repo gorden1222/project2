@@ -18,7 +18,7 @@
 <script type="text/javascript" src="https://www.amcharts.com/lib/4/themes/spiritedaway.js"></script>
 <script type="text/javascript" src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
 <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
-<title>Insert title here</title>
+<title>Charts Index</title>
 
 <!-- Chart code -->
 <script>
@@ -42,6 +42,27 @@ function init() {
     	url: "/project2/LoadDataServlet.do",
     	data:{
     		doAction:"startGetData"
+    	},
+    	async: false,
+        dataType: "json",
+        type: "POST",
+        success: function(rtnData){
+        	
+        },
+        error: function () {
+           // setTimeout(GetData, updateInterval);
+           init();
+        }
+    });
+}
+
+function stop() {
+	$.ajaxSetup({ cache: false });
+	
+	$.ajax({
+    	url: "/project2/LoadDataServlet.do",
+    	data:{
+    		doAction:"stopGetData"
     	},
     	async: false,
         dataType: "json",
@@ -244,10 +265,20 @@ function CreateChart(divname,datas) {
 
 
 $(document).ready(function () {
-	init(); 
+	
 	 // 開啟selenium抓資料function
 	//setTimeout(GetData, updateInterval);
-	//GetData();    
+	//GetData();   
+	$('#start').click(function(){
+	    console.log("NBA logo onclick");
+	    init();
+	});
+	
+	$('#stop').click(function(){
+	    console.log("NBA logo onclick");
+	    stop();
+	});
+	
 	$('#nba').click(function(){
 	    console.log("NBA logo onclick");
 	    window.open('http://localhost:8080/project2/ShowNBAGameInfo.jsp', '_blank');
@@ -267,6 +298,26 @@ $(document).ready(function () {
 	    console.log("KBO logo onclick");
 	    window.open('http://localhost:8080/project2/ShowKBOGameInfo.jsp', '_blank');
 	});
+	
+	$('#nba_table').click(function(){
+	    console.log("NBA_TABLE logo onclick");
+	    window.open('http://localhost:8080/project2/ShowNBAInfoTable.jsp', '_blank');
+	});
+
+	$('#mlb_table').click(function(){
+	    console.log("MLB_TABLE logo onclick");
+	  //  window.open('http://localhost:8080/project2/ShowMLBGameInfo.jsp', '_blank');
+	});
+
+	$('#npb_table').click(function(){
+	    console.log("NPB_TABLE logo onclick");
+	  //  window.open('http://localhost:8080/project2/ShowNPBGameInfo.jsp', '_blank');
+	});
+	
+	$('#kbo_table').click(function(){
+	    console.log("KBO_TABLE logo onclick");
+	  //  window.open('http://localhost:8080/project2/ShowKBOGameInfo.jsp', '_blank');
+	});
 });
 
 
@@ -278,9 +329,11 @@ $(document).ready(function () {
 </head>
 <body>
 <!-- HTML -->
-<center><img id="nba" src="nba.png" width="30%"/><br><br></center>
-<center><img id="mlb" src="mlb.jpg" width="30%"/><br></center>
-<center><img id="npb" src="npb.png" width="30%"/><br></center>
-<center><img id="kbo" src="kbo.png" width="30%"/><br></center>
+<center><img id="start" src="start.png" width="30%"/> <t> <img id="stop" src="stop.jpg" width="30%"/> <br><br></center>
+<br><br><br><br>
+<center><img id="nba" src="nba.png" width="30%"/> <t> <img id="nba_table" src="nba_table.jpg" width="30%"/> <br><br></center>
+<center><img id="mlb" src="mlb.jpg" width="30%"/> <t> <img id="mlb_table" src="mlb_table.png" width="30%"/> <br></center>
+<center><img id="npb" src="npb.png" width="30%"/> <t> <img id="npb_table" src="npb_table.jpg" width="30%"/> <br></center>
+<center><img id="kbo" src="kbo.png" width="30%"/> <t> <img id="kbo_table" src="kbo_table.jpg" width="30%"/> <br></center>
 </body>
 </html>
