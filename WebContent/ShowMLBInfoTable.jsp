@@ -164,6 +164,17 @@ function checkboxclick(){
 
 var temp;
 
+function GetFormattedDate(date) {
+    var todayTime = new Date(date);
+    var month = todayTime.getMonth() + 1;
+    var day = todayTime.getDate();
+    var year = todayTime.getFullYear();
+    var hour = todayTime.getHours();
+    var minute = todayTime.getMinutes();
+    var second = todayTime.getSeconds();
+    return month + "/" + day + ", " + hour + ":" + minute + ":" + second;
+}
+
 function update(_data) {
 
 	//var starttime = inittime,
@@ -383,14 +394,14 @@ function update(_data) {
 			    moneyline_data_td_starttime.width = '300';
 			    moneyline_data_td_starttime.align = "center";
 			    moneyline_data_td_starttime.style = "font-size:24px;";
-			    moneyline_data_td_starttime.appendChild(document.createTextNode(homemoneyline[a-1].time));
+			    moneyline_data_td_starttime.appendChild(document.createTextNode(GetFormattedDate(homemoneyline[a-1].time)));
 			    moneyline_data_tr.appendChild(moneyline_data_td_starttime);
 
 			    var moneyline_data_td_endtime = document.createElement('TD');
 			    moneyline_data_td_endtime.width = '300';
 			    moneyline_data_td_endtime.align = "center";
 			    moneyline_data_td_endtime.style = "font-size:24px;";
-			    moneyline_data_td_endtime.appendChild(document.createTextNode(homemoneyline[a].time));
+			    moneyline_data_td_endtime.appendChild(document.createTextNode(GetFormattedDate(homemoneyline[a].time)));
 			    moneyline_data_tr.appendChild(moneyline_data_td_endtime);
 			    
 			    var td_away_moneyline_data = document.createElement('TD');
@@ -526,14 +537,14 @@ function update(_data) {
 			    runline_data_td_starttime.width = '300';
 			    runline_data_td_starttime.align = "center";
 			    runline_data_td_starttime.style = "font-size:24px;";
-			    runline_data_td_starttime.appendChild(document.createTextNode(homehandicap[a-1].time));
+			    runline_data_td_starttime.appendChild(document.createTextNode(GetFormattedDate(homehandicap[a-1].time)));
 			    runline_data_tr.appendChild(runline_data_td_starttime);
 
 			    var runline_data_td_endtime = document.createElement('TD');
 			    runline_data_td_endtime.width = '300';
 			    runline_data_td_endtime.align = "center";
 			    runline_data_td_endtime.style = "font-size:24px;";
-			    runline_data_td_endtime.appendChild(document.createTextNode(homehandicap[a].time));
+			    runline_data_td_endtime.appendChild(document.createTextNode(GetFormattedDate(homehandicap[a].time)));
 			    runline_data_tr.appendChild(runline_data_td_endtime);
 			    
 			    var td_away_runline_data = document.createElement('TD');
@@ -676,14 +687,14 @@ function update(_data) {
 			    total_data_td_starttime.width = '300';
 			    total_data_td_starttime.align = "center";
 			    total_data_td_starttime.style = "font-size:24px;";
-			    total_data_td_starttime.appendChild(document.createTextNode(totalpoint_up[a-1].time));
+			    total_data_td_starttime.appendChild(document.createTextNode(GetFormattedDate(totalpoint_up[a-1].time)));
 			    total_data_tr.appendChild(total_data_td_starttime);
 
 			    var total_data_td_endtime = document.createElement('TD');
 			    total_data_td_endtime.width = '300';
 			    total_data_td_endtime.align = "center";
 			    total_data_td_endtime.style = "font-size:24px;";
-			    total_data_td_endtime.appendChild(document.createTextNode(totalpoint_up[a].time));
+			    total_data_td_endtime.appendChild(document.createTextNode(GetFormattedDate(totalpoint_up[a].time)));
 			    total_data_tr.appendChild(total_data_td_endtime);
 			    
 			    var td_total_up_data = document.createElement('TD');
