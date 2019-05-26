@@ -18,7 +18,7 @@
 <script type="text/javascript" src="https://www.amcharts.com/lib/4/themes/spiritedaway.js"></script>
 <script type="text/javascript" src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
 <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
-<title>Show NBA Info Table</title>
+<title>Show MLB Info Table</title>
 
 <!-- Chart code -->
 <script>
@@ -62,7 +62,7 @@ function GetData() {
     	url: "/project2/LoadDataServlet.do",
     	data:{
     		doAction:"loadData",
-    		type:"NBA"
+    		type:"MLB"
     	},
         dataType: "json",
         async: false,
@@ -767,7 +767,7 @@ $(document).ready(function () {
 	//init(); 
 	 // 開啟selenium抓資料function
 	//setTimeout(GetData, updateInterval);
-	 console.log("ShowNBAGame");
+	 console.log("ShowMLBGame");
 	 GetData();    
 });
 </script>

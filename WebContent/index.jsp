@@ -271,11 +271,13 @@ $(document).ready(function () {
 	//GetData();   
 	$('#start').click(function(){
 	    console.log("NBA logo onclick");
+	    if(confirm("Start Get Data from pinnacle?"))
 	    init();
 	});
 	
 	$('#stop').click(function(){
 	    console.log("NBA logo onclick");
+	    if(confirm("Stop Getting data?"))
 	    stop();
 	});
 	
@@ -306,17 +308,17 @@ $(document).ready(function () {
 
 	$('#mlb_table').click(function(){
 	    console.log("MLB_TABLE logo onclick");
-	  //  window.open('http://localhost:8080/project2/ShowMLBGameInfo.jsp', '_blank');
+	    window.open('http://localhost:8080/project2/ShowMLBInfoTable.jsp', '_blank');
 	});
 
 	$('#npb_table').click(function(){
 	    console.log("NPB_TABLE logo onclick");
-	  //  window.open('http://localhost:8080/project2/ShowNPBGameInfo.jsp', '_blank');
+	    window.open('http://localhost:8080/project2/ShowNPBInfoTable.jsp', '_blank');
 	});
 	
 	$('#kbo_table').click(function(){
 	    console.log("KBO_TABLE logo onclick");
-	  //  window.open('http://localhost:8080/project2/ShowKBOGameInfo.jsp', '_blank');
+	    window.open('http://localhost:8080/project2/ShowKBOInfoTable.jsp', '_blank');
 	});
 });
 
