@@ -120,8 +120,8 @@ public class LoadDataServlet extends HttpServlet{
 		//	System.out.println(file.toString());
 			rtnObj.add(tmp);
 //			count++;
-		}
-
+			}
+			LoadData.Deletecloseddata(Filedirectory);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

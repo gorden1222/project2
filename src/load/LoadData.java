@@ -28,7 +28,7 @@ public class LoadData {
 		System.out.println("[Pony] yesterday = "+yesterday);
 		File yes_file = new File(file.getPath().replace(today, yesterday));
 		System.out.println("[Pony] Yesterday file = " + yes_file.getPath());
-		Deletecloseddata(file);
+//		Deletecloseddata(file);
 		try {
 			if(yes_file.exists()){
 				FileInputStream yes_f = new FileInputStream(yes_file);
@@ -201,16 +201,17 @@ public class LoadData {
 	    cal.add(Calendar.DATE, -1);
 	    return cal.getTime();
 	}
-	private static void Deletecloseddata(File file){
+	public static void Deletecloseddata(File file){
 		try{
-			for(int i = 3;i <= 7; i++){
+			for(int i = 5;i <= 16; i++){
 			    final Calendar cal = Calendar.getInstance();
 			    cal.add(Calendar.DATE, -i);
 				String date = new SimpleDateFormat("yyyyMMdd").format(cal.getTime());
 				System.out.println("[Pony] date = "+date);
 				String delfileStr = file.getPath().replace(today, date);
-				delfileStr = delfileStr.replace(delfileStr.split("////")[6], "//");
+//				delfileStr = delfileStr.replace(delfileStr.split("////")[6], "//");
 				File del_file = new File(delfileStr);
+				
 				System.out.println("[Pony] del_file = "+del_file.getPath());
 				if(del_file.exists()){
 					if (del_file.isDirectory()) {
