@@ -170,7 +170,14 @@ function GetFormattedDate(date) {
     var hour = todayTime.getHours();
     var minute = todayTime.getMinutes();
     var second = todayTime.getSeconds();
-    return month + "/" + day + ", " + hour + ":" + minute + ":" + second;
+    var result = month + "/" + day + ", ";
+    if(hour < 10) result += "0" + hour + ":";
+    else result += hour + ":";
+    if(minute < 10) result += "0" + minute + ":";
+    else result += minute + ":";
+    if(second < 10) result += "0" + second;
+    else result += second;
+    return result;
 }
 
 var temp;
@@ -220,8 +227,8 @@ function update(_data) {
 		textdiv.appendChild(TextSpan);
 		document.body.appendChild(textdiv); 
 		//==================Process Data======================
-		for(j=1;j<Object.keys(_data[i].result).length;j++){
-			if(j==1){
+		for(j=0;j<Object.keys(_data[i].result).length;j++){
+			if(j==0){
 			    homemoneyline.push({
 			    	time:_data[i].result[j].dataTime,
 			    	value:_data[i].result[j].homeMoneyLineOdds,
@@ -255,75 +262,78 @@ function update(_data) {
 			    	second:_data[i].result[j].dataSecond
 			    }); 
 			}
-			if((_data[i].result[j].awayMoneyLineOdds != _data[i].result[j-1].awayMoneyLineOdds)
-				|| (_data[i].result[j].homeMoneyLineOdds != _data[i].result[j-1].homeMoneyLineOdds)){
-				var homeoddsdiff = _data[i].result[j].homeMoneyLineOdds - _data[i].result[j-1].homeMoneyLineOdds;
-				var awayoddsdiff = _data[i].result[j].awayMoneyLineOdds - _data[i].result[j-1].awayMoneyLineOdds;
-				var timediff = _data[i].result[j].dataSecond - _data[i].result[j-1].dataSecond;
-				var homeslope = homeoddsdiff / timediff;
-				var awayslope = awayoddsdiff / timediff;
-				//console.log(homeslope);
-				//console.log(awayslope);
+			else{
+				if((_data[i].result[j].awayMoneyLineOdds != _data[i].result[j-1].awayMoneyLineOdds)
+						|| (_data[i].result[j].homeMoneyLineOdds != _data[i].result[j-1].homeMoneyLineOdds)){
+						var homeoddsdiff = _data[i].result[j].homeMoneyLineOdds - _data[i].result[j-1].homeMoneyLineOdds;
+						var awayoddsdiff = _data[i].result[j].awayMoneyLineOdds - _data[i].result[j-1].awayMoneyLineOdds;
+						var timediff = _data[i].result[j].dataSecond - _data[i].result[j-1].dataSecond;
+						var homeslope = homeoddsdiff / timediff;
+						var awayslope = awayoddsdiff / timediff;
+						//console.log(homeslope);
+						//console.log(awayslope);
 
-			    homemoneyline.push({
-			    	time:_data[i].result[j].dataTime,
-			    	value:_data[i].result[j].homeMoneyLineOdds,
-			    	second:_data[i].result[j].dataSecond
-			    });
-			    awaymoneyline.push({
-			    	time:_data[i].result[j].dataTime,
-			    	value:_data[i].result[j].awayMoneyLineOdds,
-			    	second:_data[i].result[j].dataSecond
-			    });
-			}			    
-		    	
-			if(_data[i].result[j].awayHandicapOdds != _data[i].result[j-1].awayHandicapOdds
-			  ||_data[i].result[j].awayHandicap != _data[i].result[j-1].awayHandicap 
-			  ||_data[i].result[j].homeHandicapOdds != _data[i].result[j-1].homeHandicapOdds
-			  ||_data[i].result[j].homeHandicap != _data[i].result[j-1].homeHandicap){
-				var homeoddsdiff = _data[i].result[j].homeHandicapOdds - _data[i].result[j-1].homeHandicapOdds;
-				var awayoddsdiff = _data[i].result[j].awayHandicapOdds - _data[i].result[j-1].awayHandicapOdds;
-				var timediff = _data[i].result[j].dataSecond - _data[i].result[j-1].dataSecond;
-				var homeslope = homeoddsdiff / timediff;
-				var awayslope = awayoddsdiff / timediff;
-				//console.log(homeslope);
-				//console.log(awayslope);
-			    awayhandicap.push({
-			    	time:_data[i].result[j].dataTime,
-			    	value:_data[i].result[j].awayHandicapOdds,
-			    	score:_data[i].result[j].awayHandicap,
-			    	second:_data[i].result[j].dataSecond
-			    });
-			    homehandicap.push({
-			    	time:_data[i].result[j].dataTime,
-			    	value:_data[i].result[j].homeHandicapOdds,
-			    	score:_data[i].result[j].homeHandicap,
-			    	second:_data[i].result[j].dataSecond
-			    });
+					    homemoneyline.push({
+					    	time:_data[i].result[j].dataTime,
+					    	value:_data[i].result[j].homeMoneyLineOdds,
+					    	second:_data[i].result[j].dataSecond
+					    });
+					    awaymoneyline.push({
+					    	time:_data[i].result[j].dataTime,
+					    	value:_data[i].result[j].awayMoneyLineOdds,
+					    	second:_data[i].result[j].dataSecond
+					    });
+					}			    
+				    	
+					if(_data[i].result[j].awayHandicapOdds != _data[i].result[j-1].awayHandicapOdds
+					  ||_data[i].result[j].awayHandicap != _data[i].result[j-1].awayHandicap 
+					  ||_data[i].result[j].homeHandicapOdds != _data[i].result[j-1].homeHandicapOdds
+					  ||_data[i].result[j].homeHandicap != _data[i].result[j-1].homeHandicap){
+						var homeoddsdiff = _data[i].result[j].homeHandicapOdds - _data[i].result[j-1].homeHandicapOdds;
+						var awayoddsdiff = _data[i].result[j].awayHandicapOdds - _data[i].result[j-1].awayHandicapOdds;
+						var timediff = _data[i].result[j].dataSecond - _data[i].result[j-1].dataSecond;
+						var homeslope = homeoddsdiff / timediff;
+						var awayslope = awayoddsdiff / timediff;
+						//console.log(homeslope);
+						//console.log(awayslope);
+					    awayhandicap.push({
+					    	time:_data[i].result[j].dataTime,
+					    	value:_data[i].result[j].awayHandicapOdds,
+					    	score:_data[i].result[j].awayHandicap,
+					    	second:_data[i].result[j].dataSecond
+					    });
+					    homehandicap.push({
+					    	time:_data[i].result[j].dataTime,
+					    	value:_data[i].result[j].homeHandicapOdds,
+					    	score:_data[i].result[j].homeHandicap,
+					    	second:_data[i].result[j].dataSecond
+					    });
+					}
+				    
+					if(_data[i].result[j].bigTotalOdds != _data[i].result[j-1].bigTotalOdds
+					   ||_data[i].result[j].smallTotalOdds != _data[i].result[j-1].smallTotalOdds
+					   ||_data[i].result[j].total != _data[i].result[j-1].total){
+						var upoddsdiff = _data[i].result[j].bigTotalOdds - _data[i].result[j-1].bigTotalOdds;
+						var lowoddsdiff = _data[i].result[j].smallTotalOdds - _data[i].result[j-1].smallTotalOdds;
+						var timediff = _data[i].result[j].dataSecond - _data[i].result[j-1].dataSecond;
+						var upslope = upoddsdiff / timediff;
+						var lowslope = lowoddsdiff / timediff;
+					//	console.log(upslope);
+						//console.log(lowslope);
+					    totalpoint_up.push({
+					    	time:_data[i].result[j].dataTime,
+					    	value:_data[i].result[j].bigTotalOdds,
+					    	score:_data[i].result[j].total,
+					    	second:_data[i].result[j].dataSecond
+					    });
+					    totalpoint_low.push({
+					    	time:_data[i].result[j].dataTime,
+					    	value:_data[i].result[j].smallTotalOdds,
+					    	second:_data[i].result[j].dataSecond
+					    }); 
+					}
 			}
-		    
-			if(_data[i].result[j].bigTotalOdds != _data[i].result[j-1].bigTotalOdds
-			   ||_data[i].result[j].smallTotalOdds != _data[i].result[j-1].smallTotalOdds
-			   ||_data[i].result[j].total != _data[i].result[j-1].total){
-				var upoddsdiff = _data[i].result[j].bigTotalOdds - _data[i].result[j-1].bigTotalOdds;
-				var lowoddsdiff = _data[i].result[j].smallTotalOdds - _data[i].result[j-1].smallTotalOdds;
-				var timediff = _data[i].result[j].dataSecond - _data[i].result[j-1].dataSecond;
-				var upslope = upoddsdiff / timediff;
-				var lowslope = lowoddsdiff / timediff;
-			//	console.log(upslope);
-				//console.log(lowslope);
-			    totalpoint_up.push({
-			    	time:_data[i].result[j].dataTime,
-			    	value:_data[i].result[j].bigTotalOdds,
-			    	score:_data[i].result[j].total,
-			    	second:_data[i].result[j].dataSecond
-			    });
-			    totalpoint_low.push({
-			    	time:_data[i].result[j].dataTime,
-			    	value:_data[i].result[j].smallTotalOdds,
-			    	second:_data[i].result[j].dataSecond
-			    }); 
-			}
+			
 		}
 		//==================Process Data======================
 		var runlinechartData = [],moneylinechartdata = [],totallinechartdata=[];
@@ -345,15 +355,15 @@ function update(_data) {
 	    moneyline_td_starttime.width = '300';
 	    moneyline_td_starttime.align = "center";
 	    moneyline_td_starttime.style = "font-size:24px;";
-	    moneyline_td_starttime.appendChild(document.createTextNode("起始時間"));
+	    moneyline_td_starttime.appendChild(document.createTextNode("Time"));
 	    moneyline_tr.appendChild(moneyline_td_starttime);
 
-	    var moneyline_td_endtime = document.createElement('TD');
+	 /*   var moneyline_td_endtime = document.createElement('TD');
 	    moneyline_td_endtime.width = '300';
 	    moneyline_td_endtime.align = "center";
 	    moneyline_td_endtime.style = "font-size:24px;";
 	    moneyline_td_endtime.appendChild(document.createTextNode("變化發生時間"));
-	    moneyline_tr.appendChild(moneyline_td_endtime);
+	    moneyline_tr.appendChild(moneyline_td_endtime);*/
 	    
 	    var td_away_moneyline = document.createElement('TD');
 	    td_away_moneyline.width = '300';
@@ -386,23 +396,26 @@ function update(_data) {
 	    moneyline_tableBody.appendChild(moneyline_tr);
 	    
 	    //==============print out moneyline data================
-	    if(homemoneyline.length > 1){
-		    for(a=1;a<homemoneyline.length;a++){
+	   // if(homemoneyline.length > 1){
+		    for(a=0;a<homemoneyline.length;a++){
 		    	var moneyline_data_tr = document.createElement('TR');
 			    
 			    var moneyline_data_td_starttime = document.createElement('TD');
 			    moneyline_data_td_starttime.width = '300';
 			    moneyline_data_td_starttime.align = "center";
 			    moneyline_data_td_starttime.style = "font-size:24px;";
-			    moneyline_data_td_starttime.appendChild(document.createTextNode(GetFormattedDate(homemoneyline[a-1].time)));
+			    if(a==0)
+			    	moneyline_data_td_starttime.appendChild(document.createTextNode(GetFormattedDate(homemoneyline[a].time)));
+			    else
+			    	moneyline_data_td_starttime.appendChild(document.createTextNode(GetFormattedDate(homemoneyline[a-1].time)));
 			    moneyline_data_tr.appendChild(moneyline_data_td_starttime);
 
-			    var moneyline_data_td_endtime = document.createElement('TD');
+			    /*     var moneyline_data_td_endtime = document.createElement('TD');
 			    moneyline_data_td_endtime.width = '300';
 			    moneyline_data_td_endtime.align = "center";
 			    moneyline_data_td_endtime.style = "font-size:24px;";
 			    moneyline_data_td_endtime.appendChild(document.createTextNode(GetFormattedDate(homemoneyline[a].time)));
-			    moneyline_data_tr.appendChild(moneyline_data_td_endtime);
+			    moneyline_data_tr.appendChild(moneyline_data_td_endtime);*/
 			    
 			    var td_away_moneyline_data = document.createElement('TD');
 			    td_away_moneyline_data.width = '300';
@@ -418,30 +431,41 @@ function update(_data) {
 			    td_home_moneyline_data.appendChild(document.createTextNode(homemoneyline[a].value));
 			    moneyline_data_tr.appendChild(td_home_moneyline_data);
 			    
-			    var time_diff = homemoneyline[a].second - homemoneyline[a-1].second;
-			    var away_odds_diff = awaymoneyline[a].value - awaymoneyline[a-1].value;
-			    var home_odds_diff = homemoneyline[a].value - homemoneyline[a-1].value;
-			    var away_slpoe = away_odds_diff / time_diff * 10000;
-			    var home_slpoe = home_odds_diff / time_diff * 10000;
+			    var away_slope;
+			    var home_slope;
+			    if(a==0){
+			    	away_slope = 0;
+			    	home_slope = 0;
+			    }
+			    else{
+				    var time_diff = homemoneyline[a].second - homemoneyline[a-1].second;
+				    var away_odds_diff = awaymoneyline[a].value - awaymoneyline[a-1].value;
+				    var home_odds_diff = homemoneyline[a].value - homemoneyline[a-1].value;
+				    var away_slope = away_odds_diff / time_diff * 100000;
+				    var home_slope = home_odds_diff / time_diff * 100000;
+			    }
+
+
+
 
 
 			    var td_away_slope_moneyline_data = document.createElement('TD'); 
 			    td_away_slope_moneyline_data.width = '300';
 			    td_away_slope_moneyline_data.align = "center";
 			    td_away_slope_moneyline_data.style = "font-size:24px;";
-			    td_away_slope_moneyline_data.appendChild(document.createTextNode(away_slpoe));
+			    td_away_slope_moneyline_data.appendChild(document.createTextNode(away_slope.toFixed(3)));
 			    moneyline_data_tr.appendChild(td_away_slope_moneyline_data);
 			    
 			    var td_home_slope_moneyline_data = document.createElement('TD'); 
 			    td_home_slope_moneyline_data.width = '300';
 			    td_home_slope_moneyline_data.align = "center";
 			    td_home_slope_moneyline_data.style = "font-size:24px;";
-			    td_home_slope_moneyline_data.appendChild(document.createTextNode(home_slpoe));
+			    td_home_slope_moneyline_data.appendChild(document.createTextNode(home_slope.toFixed(3)));
 			    moneyline_data_tr.appendChild(td_home_slope_moneyline_data);
 			    
 			    moneyline_tableBody.appendChild(moneyline_data_tr);
 		    }
-	    }
+	   // }
 	    //==============print out moneyline data================
 
 	    
@@ -469,15 +493,15 @@ function update(_data) {
 	    runline_td_starttime.width = '300';
 	    runline_td_starttime.align = "center";
 	    runline_td_starttime.style = "font-size:24px;";
-	    runline_td_starttime.appendChild(document.createTextNode("起始時間"));
+	    runline_td_starttime.appendChild(document.createTextNode("Time"));
 	    runline_tr.appendChild(runline_td_starttime);
 
-	    var runline_td_endtime = document.createElement('TD');
+	    /*  var runline_td_endtime = document.createElement('TD');
 	    runline_td_endtime.width = '300';
 	    runline_td_endtime.align = "center";
 	    runline_td_endtime.style = "font-size:24px;";
 	    runline_td_endtime.appendChild(document.createTextNode("變化發生時間"));
-	    runline_tr.appendChild(runline_td_endtime);
+	    runline_tr.appendChild(runline_td_endtime);*/
 	    
 	    var td_away_runline = document.createElement('TD');
 	    td_away_runline.width = '300';
@@ -525,23 +549,26 @@ function update(_data) {
 	    
     	
 	    //==============print out runline data================
-	    if(homehandicap.length > 1){
-		    for(a=1;a<homehandicap.length;a++){
+	    //if(homehandicap.length > 1){
+		    for(a=0;a<homehandicap.length;a++){
 				var runline_data_tr = document.createElement('TR');
 			    
 			    var runline_data_td_starttime = document.createElement('TD');
 			    runline_data_td_starttime.width = '300';
 			    runline_data_td_starttime.align = "center";
 			    runline_data_td_starttime.style = "font-size:24px;";
-			    runline_data_td_starttime.appendChild(document.createTextNode(GetFormattedDate(homehandicap[a-1].time)));
+			    if(a==0)
+			    	runline_data_td_starttime.appendChild(document.createTextNode(GetFormattedDate(homehandicap[a].time)));
+			    else
+			    	runline_data_td_starttime.appendChild(document.createTextNode(GetFormattedDate(homehandicap[a-1].time)));
 			    runline_data_tr.appendChild(runline_data_td_starttime);
 
-			    var runline_data_td_endtime = document.createElement('TD');
+			    /*    var runline_data_td_endtime = document.createElement('TD');
 			    runline_data_td_endtime.width = '300';
 			    runline_data_td_endtime.align = "center";
 			    runline_data_td_endtime.style = "font-size:24px;";
 			    runline_data_td_endtime.appendChild(document.createTextNode(GetFormattedDate(homehandicap[a].time)));
-			    runline_data_tr.appendChild(runline_data_td_endtime);
+			    runline_data_tr.appendChild(runline_data_td_endtime);*/
 			    
 			    var td_away_runline_data = document.createElement('TD');
 			    td_away_runline_data.width = '300';
@@ -571,30 +598,40 @@ function update(_data) {
 			    td_home_runline_data_scores.appendChild(document.createTextNode(homehandicap[a].score));
 			    runline_data_tr.appendChild(td_home_runline_data_scores);
 			    
-			    var time_diff = homehandicap[a].second - homehandicap[a-1].second;
-			    var away_odds_diff = awayhandicap[a].value - awayhandicap[a-1].value;
-			    var home_odds_diff = homehandicap[a].value - homehandicap[a-1].value;
-			    var away_slpoe = away_odds_diff / time_diff * 10000;
-			    var home_slpoe = home_odds_diff / time_diff * 10000;
+			    var away_slope;
+			    var home_slope;
+			    if(a==0){
+			    	away_slope = 0;
+			    	home_slope = 0;
+			    }
+			    else{
+				    var time_diff = homehandicap[a].second - homehandicap[a-1].second;
+				    var away_odds_diff = awayhandicap[a].value - awayhandicap[a-1].value;
+				    var home_odds_diff = homehandicap[a].value - homehandicap[a-1].value;
+				    var away_slope = away_odds_diff / time_diff * 100000;
+				    var home_slope = home_odds_diff / time_diff * 100000;
+			    }
+
+			    
 
 
 			    var td_away_slope_runline_data = document.createElement('TD'); 
 			    td_away_slope_runline_data.width = '300';
 			    td_away_slope_runline_data.align = "center";
 			    td_away_slope_runline_data.style = "font-size:24px;";
-			    td_away_slope_runline_data.appendChild(document.createTextNode(away_slpoe));
+			    td_away_slope_runline_data.appendChild(document.createTextNode(away_slope.toFixed(3)));
 			    runline_data_tr.appendChild(td_away_slope_runline_data);
 			    
 			    var td_home_slope_runline_data = document.createElement('TD'); 
 			    td_home_slope_runline_data.width = '300';
 			    td_home_slope_runline_data.align = "center";
 			    td_home_slope_runline_data.style = "font-size:24px;";
-			    td_home_slope_runline_data.appendChild(document.createTextNode(home_slpoe));
+			    td_home_slope_runline_data.appendChild(document.createTextNode(home_slope.toFixed(3)));
 			    runline_data_tr.appendChild(td_home_slope_runline_data);
 			    
 			    runline_tableBody.appendChild(runline_data_tr);
 		    }
-	    }
+	   // }
 	    //==============print out runline data================
 	        
 	    runlinediv.appendChild(runline_table);
@@ -620,15 +657,15 @@ function update(_data) {
 		total_td_starttime.width = '300';
 		total_td_starttime.align = "center";
 		total_td_starttime.style = "font-size:24px;";
-		total_td_starttime.appendChild(document.createTextNode("起始時間"));
+		total_td_starttime.appendChild(document.createTextNode("Time"));
 		total_tr.appendChild(total_td_starttime);
 
-	    var total_td_endtime = document.createElement('TD');
+		/* var total_td_endtime = document.createElement('TD');
 	    total_td_endtime.width = '300';
 	    total_td_endtime.align = "center";
 	    total_td_endtime.style = "font-size:24px;";
 	    total_td_endtime.appendChild(document.createTextNode("變化發生時間"));
-	    total_tr.appendChild(total_td_endtime);
+	    total_tr.appendChild(total_td_endtime);*/
 		
 		
 	    
@@ -671,23 +708,26 @@ function update(_data) {
 	    total_tableBody.appendChild(total_tr);
 	    
 	  //==============print out total score data================
-	    if(totalpoint_up.length > 1){
-		    for(a=1;a<totalpoint_up.length;a++){
+	    //if(totalpoint_up.length > 1){
+		    for(a=0;a<totalpoint_up.length;a++){
 				var total_data_tr = document.createElement('TR');
 			    
 			    var total_data_td_starttime = document.createElement('TD');
 			    total_data_td_starttime.width = '300';
 			    total_data_td_starttime.align = "center";
 			    total_data_td_starttime.style = "font-size:24px;";
-			    total_data_td_starttime.appendChild(document.createTextNode(GetFormattedDate(totalpoint_up[a-1].time)));
+			    if(a==0)
+			   		total_data_td_starttime.appendChild(document.createTextNode(GetFormattedDate(totalpoint_up[a].time)));
+			    else
+			    	total_data_td_starttime.appendChild(document.createTextNode(GetFormattedDate(totalpoint_up[a-1].time)));
 			    total_data_tr.appendChild(total_data_td_starttime);
 
-			    var total_data_td_endtime = document.createElement('TD');
+			    /*    var total_data_td_endtime = document.createElement('TD');
 			    total_data_td_endtime.width = '300';
 			    total_data_td_endtime.align = "center";
 			    total_data_td_endtime.style = "font-size:24px;";
 			    total_data_td_endtime.appendChild(document.createTextNode(GetFormattedDate(totalpoint_up[a].time)));
-			    total_data_tr.appendChild(total_data_td_endtime);
+			    total_data_tr.appendChild(total_data_td_endtime); */
 			    
 			    var td_total_up_data = document.createElement('TD');
 			    td_total_up_data.width = '300';
@@ -710,30 +750,38 @@ function update(_data) {
 			    td_total_data_scores.appendChild(document.createTextNode(totalpoint_up[a].score));
 			    total_data_tr.appendChild(td_total_data_scores);
 			    
-			    var time_diff = totalpoint_up[a].second - totalpoint_up[a-1].second;
-			    var up_odds_diff = totalpoint_up[a].value - totalpoint_up[a-1].value;
-			    var low_odds_diff = totalpoint_low[a].value - totalpoint_low[a-1].value;
-			    var up_slpoe = up_odds_diff / time_diff * 10000;
-			    var low_slpoe = low_odds_diff / time_diff * 10000;
+			    
+			    if(a==0){
+			    	up_slope = 0;
+			    	low_slope = 0;
+			    }
+			    else{
+			    	var time_diff = totalpoint_up[a].second - totalpoint_up[a-1].second;
+				    var up_odds_diff = totalpoint_up[a].value - totalpoint_up[a-1].value;
+				    var low_odds_diff = totalpoint_low[a].value - totalpoint_low[a-1].value;
+				    up_slope = up_odds_diff / time_diff * 100000;
+				    low_slope = low_odds_diff / time_diff * 100000;
+			    }
+			    
 
 
 			    var td_total_up_slope_data = document.createElement('TD'); 
 			    td_total_up_slope_data.width = '300';
 			    td_total_up_slope_data.align = "center";
 			    td_total_up_slope_data.style = "font-size:24px;";
-			    td_total_up_slope_data.appendChild(document.createTextNode(up_slpoe));
+			    td_total_up_slope_data.appendChild(document.createTextNode(up_slope.toFixed(3)));
 			    total_data_tr.appendChild(td_total_up_slope_data);
 			    
 			    var td_total_low_slope_data = document.createElement('TD'); 
 			    td_total_low_slope_data.width = '300';
 			    td_total_low_slope_data.align = "center";
 			    td_total_low_slope_data.style = "font-size:24px;";
-			    td_total_low_slope_data.appendChild(document.createTextNode(low_slpoe));
+			    td_total_low_slope_data.appendChild(document.createTextNode(low_slope.toFixed(3)));
 			    total_data_tr.appendChild(td_total_low_slope_data);
 			    
 			    total_tableBody.appendChild(total_data_tr);
 		    }
-	    }
+	   // }
 		  
 	    
 	  //==============print out total score data================  

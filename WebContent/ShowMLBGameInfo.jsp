@@ -449,11 +449,11 @@ function update(_data) {
 		//CreateMulChart(_data[i].result[0].awayTeam+"total",total);
 		
 		//======[Pony]將資料以及div name輸入到生成chart的 function========
-		CreateChart(_data[i].result[0].awayTeam+"moneyline",awayhandicap);
-		CreateChart(_data[i].result[0].homeTeam+"moneyline",homehandicap);
+		CreateChart(_data[i].result[0].awayTeam+"moneyline",awaymoneyline);
+		CreateChart(_data[i].result[0].homeTeam+"moneyline",homemoneyline);
 		
-		CreateChart(_data[i].result[0].awayTeam+"runline",awaymoneyline);
-		CreateChart(_data[i].result[0].homeTeam+"runline",homemoneyline);
+		CreateChart(_data[i].result[0].awayTeam+"runline",awayhandicap);
+		CreateChart(_data[i].result[0].homeTeam+"runline",homehandicap);
 		
 		CreateChart(i + "_total_up",totalpoint_up);
 		CreateChart(i + "_total_low",totalpoint_low);
