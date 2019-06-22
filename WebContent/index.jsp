@@ -13,10 +13,6 @@
 </style>
 
 <!-- Resources -->
-<script type="text/javascript" src="https://www.amcharts.com/lib/4/core.js"></script>
-<script type="text/javascript" src="https://www.amcharts.com/lib/4/charts.js"></script>
-<script type="text/javascript" src="https://www.amcharts.com/lib/4/themes/spiritedaway.js"></script>
-<script type="text/javascript" src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
 <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
 <title>Charts Index</title>
 
@@ -283,25 +279,25 @@ $(document).ready(function () {
 	
 	$('#nba').click(function(){
 	    console.log("NBA logo onclick");
-	    window.open('http://localhost:8080/project2/ShowNBAGameInfo.jsp', '_blank');
+	    window.open('http://localhost:8080/project2/ShowNBAGameIndex.jsp', '_blank');
 	});
 
 	$('#mlb').click(function(){
 	    console.log("MLB logo onclick");
-	    window.open('http://localhost:8080/project2/ShowMLBGameInfo.jsp', '_blank');
+	    window.open('http://localhost:8080/project2/ShowMLBGameIndex.jsp', '_blank');
 	});
 
 	$('#npb').click(function(){
 	    console.log("NPB logo onclick");
-	    window.open('http://localhost:8080/project2/ShowNPBGameInfo.jsp', '_blank');
+	    window.open('http://localhost:8080/project2/ShowNPBGameIndex.jsp', '_blank');
 	});
 	
 	$('#kbo').click(function(){
 	    console.log("KBO logo onclick");
-	    window.open('http://localhost:8080/project2/ShowKBOGameInfo.jsp', '_blank');
+	    window.open('http://localhost:8080/project2/ShowKBOGameIndex.jsp', '_blank');
 	});
 	
-	$('#nba_table').click(function(){
+/*	$('#nba_table').click(function(){
 	    console.log("NBA_TABLE logo onclick");
 	    window.open('http://localhost:8080/project2/ShowNBAInfoTable.jsp', '_blank');
 	});
@@ -319,7 +315,7 @@ $(document).ready(function () {
 	$('#kbo_table').click(function(){
 	    console.log("KBO_TABLE logo onclick");
 	    window.open('http://localhost:8080/project2/ShowKBOInfoTable.jsp', '_blank');
-	});
+	});*/
 });
 
 
@@ -333,9 +329,9 @@ $(document).ready(function () {
 <!-- HTML -->
 <center><img id="start" src="start.png" width="30%"/> <t> <img id="stop" src="stop.jpg" width="30%"/> <br><br></center>
 <br><br><br><br>
-<center><img id="nba" src="nba.png" width="30%"/> <t> <img id="nba_table" src="nba_table.jpg" width="30%"/> <br><br></center>
-<center><img id="mlb" src="mlb.jpg" width="30%"/> <t> <img id="mlb_table" src="mlb_table.png" width="30%"/> <br></center>
-<center><img id="npb" src="npb.png" width="30%"/> <t> <img id="npb_table" src="npb_table.jpg" width="30%"/> <br></center>
-<center><img id="kbo" src="kbo.png" width="30%"/> <t> <img id="kbo_table" src="kbo_table.jpg" width="30%"/> <br></center>
+<center><img id="nba" src="nba.png" width="30%"/> <br><br></center>
+<center><img id="mlb" src="mlb.jpg" width="30%"/> <br></center>
+<center><img id="npb" src="npb.png" width="30%"/> <br></center>
+<center><img id="kbo" src="kbo.png" width="30%"/> <br></center>
 </body>
 </html>

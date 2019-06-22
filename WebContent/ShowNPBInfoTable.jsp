@@ -188,7 +188,8 @@ function update(_data) {
 	var count=0;
 	//CreateChart("runlinediv");
 	//console.log("_data.length = " + Object.keys(_data).length);
-	for(i=0;i<Object.keys(_data).length;i++){
+	var index = <%= request.getParameter("id") %>
+
 		//======[Pony]20190512, show charts(Not Comlete yet)========
 		awaymoneyline = [], homemoneyline = [], awayhandicap = [], homehandicap = [], totalpoint_up = [], totalpoint_low = [];
 		moneyline = [];
@@ -197,7 +198,7 @@ function update(_data) {
 		
 		//===========[Pony]生成Checkbox(想要用來顯示/隱藏每一場對戰的charts)==========
 		var textdiv = document.createElement("div");
-		textdiv.setAttribute("id","height: 200px");
+		textdiv.setAttribute("id",index);
 		textdiv.setAttribute("align","center");
 		textdiv.setAttribute("style","height: 250px;width: 100%;");
 		
@@ -205,131 +206,131 @@ function update(_data) {
 		var btn = document.createElement("INPUT");   // Create a <button> element
 		btn.setAttribute("type", "checkbox");
 		btn.setAttribute("checked", "true");
-		btn.setAttribute("value", i);
-		//btn.setAttribute("id", _data[i].result[0].awayTeam);
-		//btn.setAttribute("name", _data[i].result[0].homeTeam);
-		btn.id = _data[i].result[0].awayTeam;
-		btn.name = _data[i].result[0].homeTeam;
+		btn.setAttribute("value", index);
+		//btn.setAttribute("id", _data[index].result[0].awayTeam);
+		//btn.setAttribute("name", _data[index].result[0].homeTeam);
+		btn.id = _data[index].result[0].awayTeam;
+		btn.name = _data[index].result[0].homeTeam;
 		btn.checked = true;
 		btn.setAttribute("align", "center");
 		btn.setAttribute("style", "width:20px;height:20px;");
-		//btn.setAttribute("value", _data[i].result[0].awayTeam + "V.S" + _data[i].result[0].homeTeam);
-		btn.innerHtml = _data[i].result[0].awayTeam + "V.S" + _data[i].result[0].homeTeam;      // Insert text
+		//btn.setAttribute("value", _data[index].result[0].awayTeam + "V.S" + _data[index].result[0].homeTeam);
+		btn.innerHtml = _data[index].result[0].awayTeam + "V.S" + _data[index].result[0].homeTeam;      // Insert text
 		textdiv.appendChild(btn);
 		//document.body.appendChild(btn);               // Append <button> to <body>
 		
 		var TextSpan = document.createElement("span");
-		TextSpan.setAttribute("name",_data[i].result[0].awayTeam + "V.S" + _data[i].result[0].homeTeam);
+		TextSpan.setAttribute("name",_data[index].result[0].awayTeam + "V.S" + _data[index].result[0].homeTeam);
 		TextSpan.setAttribute("style","font-size:36px;");
 		TextSpan.setAttribute("align", "center");
-		TextSpan.appendChild(document.createTextNode(_data[i].result[0].awayTeam + "V.S" + _data[i].result[0].homeTeam));
+		TextSpan.appendChild(document.createTextNode(_data[index].result[0].awayTeam + "V.S" + _data[index].result[0].homeTeam));
 
 		textdiv.appendChild(TextSpan);
 		document.body.appendChild(textdiv); 
 		//==================Process Data======================
-		for(j=0;j<Object.keys(_data[i].result).length;j++){
+		for(j=0;j<Object.keys(_data[index].result).length;j++){
 			if(j==0){
 			    homemoneyline.push({
-			    	time:_data[i].result[j].dataTime,
-			    	value:_data[i].result[j].homeMoneyLineOdds,
-			    	second:_data[i].result[j].dataSecond
+			    	time:_data[index].result[j].dataTime,
+			    	value:_data[index].result[j].homeMoneyLineOdds,
+			    	second:_data[index].result[j].dataSecond
 			    });
 			    awaymoneyline.push({
-			    	time:_data[i].result[j].dataTime,
-			    	value:_data[i].result[j].awayMoneyLineOdds   	
+			    	time:_data[index].result[j].dataTime,
+			    	value:_data[index].result[j].awayMoneyLineOdds   	
 			    });
 			    awayhandicap.push({
-			    	time:_data[i].result[j].dataTime,
-			    	value:_data[i].result[j].awayHandicapOdds,
-			    	score:_data[i].result[j].awayHandicap,
-			    	second:_data[i].result[j].dataSecond
+			    	time:_data[index].result[j].dataTime,
+			    	value:_data[index].result[j].awayHandicapOdds,
+			    	score:_data[index].result[j].awayHandicap,
+			    	second:_data[index].result[j].dataSecond
 			    });
 			    homehandicap.push({
-			    	time:_data[i].result[j].dataTime,
-			    	value:_data[i].result[j].homeHandicapOdds,
-			    	score:_data[i].result[j].homeHandicap,
-			    	second:_data[i].result[j].dataSecond
+			    	time:_data[index].result[j].dataTime,
+			    	value:_data[index].result[j].homeHandicapOdds,
+			    	score:_data[index].result[j].homeHandicap,
+			    	second:_data[index].result[j].dataSecond
 			    });
 			    totalpoint_up.push({
-			    	time:_data[i].result[j].dataTime,
-			    	value:_data[i].result[j].bigTotalOdds,
-			    	score:_data[i].result[j].total,
-			    	second:_data[i].result[j].dataSecond
+			    	time:_data[index].result[j].dataTime,
+			    	value:_data[index].result[j].bigTotalOdds,
+			    	score:_data[index].result[j].total,
+			    	second:_data[index].result[j].dataSecond
 			    });
 			    totalpoint_low.push({
-			    	time:_data[i].result[j].dataTime,
-			    	value:_data[i].result[j].smallTotalOdds,
-			    	second:_data[i].result[j].dataSecond
+			    	time:_data[index].result[j].dataTime,
+			    	value:_data[index].result[j].smallTotalOdds,
+			    	second:_data[index].result[j].dataSecond
 			    }); 
 			}
 			else{
-				if((_data[i].result[j].awayMoneyLineOdds != _data[i].result[j-1].awayMoneyLineOdds)
-						|| (_data[i].result[j].homeMoneyLineOdds != _data[i].result[j-1].homeMoneyLineOdds)){
-						var homeoddsdiff = _data[i].result[j].homeMoneyLineOdds - _data[i].result[j-1].homeMoneyLineOdds;
-						var awayoddsdiff = _data[i].result[j].awayMoneyLineOdds - _data[i].result[j-1].awayMoneyLineOdds;
-						var timediff = _data[i].result[j].dataSecond - _data[i].result[j-1].dataSecond;
+				if((_data[index].result[j].awayMoneyLineOdds != _data[index].result[j-1].awayMoneyLineOdds)
+						|| (_data[index].result[j].homeMoneyLineOdds != _data[index].result[j-1].homeMoneyLineOdds)){
+						var homeoddsdiff = _data[index].result[j].homeMoneyLineOdds - _data[index].result[j-1].homeMoneyLineOdds;
+						var awayoddsdiff = _data[index].result[j].awayMoneyLineOdds - _data[index].result[j-1].awayMoneyLineOdds;
+						var timediff = _data[index].result[j].dataSecond - _data[index].result[j-1].dataSecond;
 						var homeslope = homeoddsdiff / timediff;
 						var awayslope = awayoddsdiff / timediff;
 						//console.log(homeslope);
 						//console.log(awayslope);
 
 					    homemoneyline.push({
-					    	time:_data[i].result[j].dataTime,
-					    	value:_data[i].result[j].homeMoneyLineOdds,
-					    	second:_data[i].result[j].dataSecond
+					    	time:_data[index].result[j].dataTime,
+					    	value:_data[index].result[j].homeMoneyLineOdds,
+					    	second:_data[index].result[j].dataSecond
 					    });
 					    awaymoneyline.push({
-					    	time:_data[i].result[j].dataTime,
-					    	value:_data[i].result[j].awayMoneyLineOdds,
-					    	second:_data[i].result[j].dataSecond
+					    	time:_data[index].result[j].dataTime,
+					    	value:_data[index].result[j].awayMoneyLineOdds,
+					    	second:_data[index].result[j].dataSecond
 					    });
 					}			    
 				    	
-					if(_data[i].result[j].awayHandicapOdds != _data[i].result[j-1].awayHandicapOdds
-					  ||_data[i].result[j].awayHandicap != _data[i].result[j-1].awayHandicap 
-					  ||_data[i].result[j].homeHandicapOdds != _data[i].result[j-1].homeHandicapOdds
-					  ||_data[i].result[j].homeHandicap != _data[i].result[j-1].homeHandicap){
-						var homeoddsdiff = _data[i].result[j].homeHandicapOdds - _data[i].result[j-1].homeHandicapOdds;
-						var awayoddsdiff = _data[i].result[j].awayHandicapOdds - _data[i].result[j-1].awayHandicapOdds;
-						var timediff = _data[i].result[j].dataSecond - _data[i].result[j-1].dataSecond;
+					if(_data[index].result[j].awayHandicapOdds != _data[index].result[j-1].awayHandicapOdds
+					  ||_data[index].result[j].awayHandicap != _data[index].result[j-1].awayHandicap 
+					  ||_data[index].result[j].homeHandicapOdds != _data[index].result[j-1].homeHandicapOdds
+					  ||_data[index].result[j].homeHandicap != _data[index].result[j-1].homeHandicap){
+						var homeoddsdiff = _data[index].result[j].homeHandicapOdds - _data[index].result[j-1].homeHandicapOdds;
+						var awayoddsdiff = _data[index].result[j].awayHandicapOdds - _data[index].result[j-1].awayHandicapOdds;
+						var timediff = _data[index].result[j].dataSecond - _data[index].result[j-1].dataSecond;
 						var homeslope = homeoddsdiff / timediff;
 						var awayslope = awayoddsdiff / timediff;
 						//console.log(homeslope);
 						//console.log(awayslope);
 					    awayhandicap.push({
-					    	time:_data[i].result[j].dataTime,
-					    	value:_data[i].result[j].awayHandicapOdds,
-					    	score:_data[i].result[j].awayHandicap,
-					    	second:_data[i].result[j].dataSecond
+					    	time:_data[index].result[j].dataTime,
+					    	value:_data[index].result[j].awayHandicapOdds,
+					    	score:_data[index].result[j].awayHandicap,
+					    	second:_data[index].result[j].dataSecond
 					    });
 					    homehandicap.push({
-					    	time:_data[i].result[j].dataTime,
-					    	value:_data[i].result[j].homeHandicapOdds,
-					    	score:_data[i].result[j].homeHandicap,
-					    	second:_data[i].result[j].dataSecond
+					    	time:_data[index].result[j].dataTime,
+					    	value:_data[index].result[j].homeHandicapOdds,
+					    	score:_data[index].result[j].homeHandicap,
+					    	second:_data[index].result[j].dataSecond
 					    });
 					}
 				    
-					if(_data[i].result[j].bigTotalOdds != _data[i].result[j-1].bigTotalOdds
-					   ||_data[i].result[j].smallTotalOdds != _data[i].result[j-1].smallTotalOdds
-					   ||_data[i].result[j].total != _data[i].result[j-1].total){
-						var upoddsdiff = _data[i].result[j].bigTotalOdds - _data[i].result[j-1].bigTotalOdds;
-						var lowoddsdiff = _data[i].result[j].smallTotalOdds - _data[i].result[j-1].smallTotalOdds;
-						var timediff = _data[i].result[j].dataSecond - _data[i].result[j-1].dataSecond;
+					if(_data[index].result[j].bigTotalOdds != _data[index].result[j-1].bigTotalOdds
+					   ||_data[index].result[j].smallTotalOdds != _data[index].result[j-1].smallTotalOdds
+					   ||_data[index].result[j].total != _data[index].result[j-1].total){
+						var upoddsdiff = _data[index].result[j].bigTotalOdds - _data[index].result[j-1].bigTotalOdds;
+						var lowoddsdiff = _data[index].result[j].smallTotalOdds - _data[index].result[j-1].smallTotalOdds;
+						var timediff = _data[index].result[j].dataSecond - _data[index].result[j-1].dataSecond;
 						var upslope = upoddsdiff / timediff;
 						var lowslope = lowoddsdiff / timediff;
 					//	console.log(upslope);
 						//console.log(lowslope);
 					    totalpoint_up.push({
-					    	time:_data[i].result[j].dataTime,
-					    	value:_data[i].result[j].bigTotalOdds,
-					    	score:_data[i].result[j].total,
-					    	second:_data[i].result[j].dataSecond
+					    	time:_data[index].result[j].dataTime,
+					    	value:_data[index].result[j].bigTotalOdds,
+					    	score:_data[index].result[j].total,
+					    	second:_data[index].result[j].dataSecond
 					    });
 					    totalpoint_low.push({
-					    	time:_data[i].result[j].dataTime,
-					    	value:_data[i].result[j].smallTotalOdds,
-					    	second:_data[i].result[j].dataSecond
+					    	time:_data[index].result[j].dataTime,
+					    	value:_data[index].result[j].smallTotalOdds,
+					    	second:_data[index].result[j].dataSecond
 					    }); 
 					}
 			}
@@ -339,7 +340,7 @@ function update(_data) {
 		var runlinechartData = [],moneylinechartdata = [],totallinechartdata=[];
 		//===========[Pony]Create Table div==========
 		var moneylinediv = document.createElement("div");
-		moneylinediv.id = i+"_moneyline_div";
+		moneylinediv.id = index+"_moneyline_div";
 		//==============[Pony]Create Table div=================
 		//===========[Pony]Create Table==========
 		var moneyline_table = document.createElement('TABLE');
@@ -348,7 +349,7 @@ function update(_data) {
 		moneyline_table.appendChild(moneyline_tableBody);		
 		//===========[Pony]Create Table==========
 		
-		console.log("result.length = " + Object.keys(_data[i].result).length);
+		console.log("result.length = " + Object.keys(_data[index].result).length);
 		var moneyline_tr = document.createElement('TR');
 	    
 	    var moneyline_td_starttime = document.createElement('TD');
@@ -478,7 +479,7 @@ function update(_data) {
 	    
 	    
 	    var runlinediv = document.createElement("div");
-	    runlinediv.id = i+"_runline_div";
+	    runlinediv.id = index+"_runline_div";
 		//==============[Pony]Create Table div=================
 		//===========[Pony]Create Table==========
 		var runline_table = document.createElement('TABLE');
@@ -641,7 +642,7 @@ function update(_data) {
 
 	    
 	    var totaldiv = document.createElement("div");
-	    totaldiv.id = i+"_total_div";
+	    totaldiv.id = index+"_total_div";
 		//==============[Pony]Create Table div=================
 		//===========[Pony]Create Table==========
 		var total_table = document.createElement('TABLE');
@@ -795,15 +796,15 @@ function update(_data) {
 			
 			
 		//======[Pony]20190512, show charts(Not Comlete yet)========
-		//CreateMulChart(_data[i].result[0].awayTeam+"runline",moneyline);
-		//CreateMulChart(_data[i].result[0].awayTeam+"moneyline",handicap);
-		//CreateMulChart(_data[i].result[0].awayTeam+"total",total);
+		//CreateMulChart(_data[index].result[0].awayTeam+"runline",moneyline);
+		//CreateMulChart(_data[index].result[0].awayTeam+"moneyline",handicap);
+		//CreateMulChart(_data[index].result[0].awayTeam+"total",total);
 		
 		//======[Pony]將資料以及div name輸入到生成chart的 function========
 		var br =  document.createElement("br");
 		document.body.appendChild(br);
 		//======[Pony]將資料以及div name輸入到生成chart的 function========
-	}
+	
 
     now += updateInterval;
    // setTimeout(GetData, updateInterval);
