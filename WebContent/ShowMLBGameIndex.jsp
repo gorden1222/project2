@@ -49,6 +49,7 @@ function setgamelink(_data) {
 		chartHref.setAttribute("style","font-size:36px;");
 		chartHref.setAttribute("align", "center");
 		chartHref.setAttribute("href", "ShowMLBGameInfo.jsp" + "?id=" + i);
+		chartHref.setAttribute("target", "_blank");
 		chartHref.appendChild(document.createTextNode(_data[i].result[0].awayTeam + "V.S" + _data[i].result[0].homeTeam+ "----Chart"));
 
 		chartdiv.appendChild(chartHref);
@@ -68,6 +69,7 @@ function setgamelink(_data) {
 		tableHref.setAttribute("style","font-size:36px;");
 		tableHref.setAttribute("align", "center");
 		tableHref.setAttribute("href", "ShowMLBInfoTable.jsp" + "?id=" + i);
+		tableHref.setAttribute("target", "_blank");
 		tableHref.appendChild(document.createTextNode(_data[i].result[0].awayTeam + "V.S" + _data[i].result[0].homeTeam+ "----Table"));
 
 		tablediv.appendChild(tableHref);

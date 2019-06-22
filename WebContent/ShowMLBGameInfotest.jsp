@@ -21,7 +21,7 @@
 <script type="text/javascript" src="https://www.amcharts.com/lib/4/themes/spiritedaway.js"></script>
 <script type="text/javascript" src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
 <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
-<title>Show KBO Charts</title>
+<title>Show MLB Charts</title>
 
 <!-- Chart code -->
 <script>
@@ -65,7 +65,7 @@ function GetData() {
     	url: "/project2/LoadDataServlet.do",
     	data:{
     		doAction:"loadData",
-    		type:"KBO"
+    		type:"MLB"
     	},
         dataType: "json",
         async: false,
@@ -675,7 +675,7 @@ $(document).ready(function () {
 	//init(); 
 	 // 開啟selenium抓資料function
 	//setTimeout(GetData, updateInterval);
-	 console.log("ShowKBOGame");
+	 console.log("ShowLMBGame");
 	 GetData();    
 });
 </script>
