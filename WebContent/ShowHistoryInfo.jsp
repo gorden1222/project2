@@ -21,7 +21,7 @@
 <script type="text/javascript" src="https://www.amcharts.com/lib/4/themes/spiritedaway.js"></script>
 <script type="text/javascript" src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
 <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
-<title>Show KBO Charts</title>
+<title>Show History game Charts</title>
 
 <!-- Chart code -->
 <script>
@@ -35,6 +35,10 @@ var now = new Date().getTime();
 var inittime = now;
 var contents;
 var length;
+var href = location.href;
+var url = new URL(href);
+var sport = url.searchParams.get("sport");
+var timestamp = url.searchParams.get("timestamp");
 
 
 function init() {
@@ -64,8 +68,9 @@ function GetData() {
         //url: "http://www.jqueryflottutorial.com/AjaxUpdateChart.aspx",
     	url: "/project2/LoadDataServlet.do",
     	data:{
-    		doAction:"loadData",
-    		type:"4"
+    		doAction:"loadHistoryData",
+    		type:sport,
+    		timestamp:timestamp
     	},
         dataType: "json",
         async: false,

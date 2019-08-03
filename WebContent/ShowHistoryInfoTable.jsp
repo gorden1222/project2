@@ -18,7 +18,7 @@
 <script type="text/javascript" src="https://www.amcharts.com/lib/4/themes/spiritedaway.js"></script>
 <script type="text/javascript" src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
 <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
-<title>Show MLB Info Table</title>
+<title>Show History Info Table</title>
 
 <!-- Chart code -->
 <script>
@@ -32,6 +32,10 @@ var now = new Date().getTime();
 var inittime = now;
 var contents;
 var length;
+var href = location.href;
+var url = new URL(href);
+var sport = url.searchParams.get("sport");
+var timestamp = url.searchParams.get("timestamp");
 
 
 function init() {
@@ -61,8 +65,9 @@ function GetData() {
         //url: "http://www.jqueryflottutorial.com/AjaxUpdateChart.aspx",
     	url: "/project2/LoadDataServlet.do",
     	data:{
-    		doAction:"loadData",
-    		type:"2"
+    		doAction:"loadHistoryData",
+    		type:sport,
+    		timestamp:timestamp
     	},
         dataType: "json",
         async: false,
@@ -71,13 +76,8 @@ function GetData() {
         	update(rtnData);
         	console.log(rtnData);
         	contents = rtnData[0].result[0].awayTeam;
-        	//length = Object.keys(rtnData).length;
-        	//console.log(length);
-        	//length = Object.keys(rtnData[0].result).length;
-        	//console.log(length);
         	checkboxclick();
-        	//alert(JSON.stringify(rtnData));
-        	//setInterval(GetData, updateInterval);
+
         },
         error: function () {
             //setTimeout(GetData, updateInterval);
@@ -229,7 +229,7 @@ function update(_data) {
 		document.body.appendChild(textdiv); 
 		//==================Process Data======================
 		for(j=0;j<Object.keys(_data[index].result).length;j++){
-			//if(j==0){
+			if(j==0){
 			    homemoneyline.push({
 			    	time:_data[index].result[j].dataTime,
 			    	value:_data[index].result[j].homeMoneyLineOdds,
@@ -262,8 +262,8 @@ function update(_data) {
 			    	value:_data[index].result[j].smallTotalOdds,
 			    	second:_data[index].result[j].dataSecond
 			    }); 
-			//}
-			/*else{
+			}
+			else{
 				if((_data[index].result[j].awayMoneyLineOdds != _data[index].result[j-1].awayMoneyLineOdds)
 						|| (_data[index].result[j].homeMoneyLineOdds != _data[index].result[j-1].homeMoneyLineOdds)){
 						var homeoddsdiff = _data[index].result[j].homeMoneyLineOdds - _data[index].result[j-1].homeMoneyLineOdds;
@@ -333,7 +333,7 @@ function update(_data) {
 					    	second:_data[index].result[j].dataSecond
 					    }); 
 					}
-			}*/
+			}
 			
 		}
 		//==================Process Data======================
@@ -405,10 +405,10 @@ function update(_data) {
 			    moneyline_data_td_starttime.width = '300';
 			    moneyline_data_td_starttime.align = "center";
 			    moneyline_data_td_starttime.style = "font-size:24px;";
-			   // if(a==0)
-			    moneyline_data_td_starttime.appendChild(document.createTextNode(GetFormattedDate(homemoneyline[a].time)));
-			   // else
-			   // 	moneyline_data_td_starttime.appendChild(document.createTextNode(GetFormattedDate(homemoneyline[a-1].time)));
+			    if(a==0)
+			    	moneyline_data_td_starttime.appendChild(document.createTextNode(GetFormattedDate(homemoneyline[a].time)));
+			    else
+			    	moneyline_data_td_starttime.appendChild(document.createTextNode(GetFormattedDate(homemoneyline[a-1].time)));
 			    moneyline_data_tr.appendChild(moneyline_data_td_starttime);
 
 			    /*     var moneyline_data_td_endtime = document.createElement('TD');
@@ -558,10 +558,10 @@ function update(_data) {
 			    runline_data_td_starttime.width = '300';
 			    runline_data_td_starttime.align = "center";
 			    runline_data_td_starttime.style = "font-size:24px;";
-			    //if(a==0)
-			    runline_data_td_starttime.appendChild(document.createTextNode(GetFormattedDate(homehandicap[a].time)));
-			    //else
-			    //	runline_data_td_starttime.appendChild(document.createTextNode(GetFormattedDate(homehandicap[a-1].time)));
+			    if(a==0)
+			    	runline_data_td_starttime.appendChild(document.createTextNode(GetFormattedDate(homehandicap[a].time)));
+			    else
+			    	runline_data_td_starttime.appendChild(document.createTextNode(GetFormattedDate(homehandicap[a-1].time)));
 			    runline_data_tr.appendChild(runline_data_td_starttime);
 
 			    /*    var runline_data_td_endtime = document.createElement('TD');
@@ -716,10 +716,10 @@ function update(_data) {
 			    total_data_td_starttime.width = '300';
 			    total_data_td_starttime.align = "center";
 			    total_data_td_starttime.style = "font-size:24px;";
-			    //if(a==0)
-			   	total_data_td_starttime.appendChild(document.createTextNode(GetFormattedDate(totalpoint_up[a].time)));
-			    //else
-			    	//total_data_td_starttime.appendChild(document.createTextNode(GetFormattedDate(totalpoint_up[a-1].time)));
+			    if(a==0)
+			   		total_data_td_starttime.appendChild(document.createTextNode(GetFormattedDate(totalpoint_up[a].time)));
+			    else
+			    	total_data_td_starttime.appendChild(document.createTextNode(GetFormattedDate(totalpoint_up[a-1].time)));
 			    total_data_tr.appendChild(total_data_td_starttime);
 
 			    /*    var total_data_td_endtime = document.createElement('TD');
@@ -814,7 +814,7 @@ $(document).ready(function () {
 	//init(); 
 	 // 開啟selenium抓資料function
 	//setTimeout(GetData, updateInterval);
-	 console.log("ShowMLBGame");
+	 console.log("ShowKBOGame");
 	 GetData();    
 });
 </script>

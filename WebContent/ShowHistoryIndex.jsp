@@ -5,18 +5,36 @@
 <head>
 
 <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
-<title>Show MLB Game Index</title>
+<title>Show History Game Index</title>
 
 <script>
+var href = location.href;
+console.log(href);
+var url = new URL(href);
+var sport = url.searchParams.get("sport");
+var year = url.searchParams.get("year");
+var month = url.searchParams.get("month");
+var day = url.searchParams.get("day");
+var timestamp;
+
 function GetData() {
+
+	
+	timestamp = ""+year;
+	if(month < 10) timestamp += "0";
+	timestamp += month;
+	if(day < 10) timestamp += "0";
+	timestamp += day;
+	console.log("timestamp = "+timestamp);
     $.ajaxSetup({ cache: false });
 
     $.ajax({
         //url: "http://www.jqueryflottutorial.com/AjaxUpdateChart.aspx",
     	url: "/project2/LoadDataServlet.do",
     	data:{
-    		doAction:"loadData",
-    		type:"2"
+    		doAction:"loadHistoryData",
+    		type:sport,
+    		timestamp:timestamp
     	},
         dataType: "json",
         async: false,
@@ -49,7 +67,7 @@ function setgamelink(_data) {
 		chartHref.setAttribute("id",i+1);
 		chartHref.setAttribute("style","font-size:36px;");
 		chartHref.setAttribute("align", "center");
-		chartHref.setAttribute("href", "ShowMLBGameInfo.jsp" + "?id=" + i);
+		chartHref.setAttribute("href", "ShowHistoryInfo.jsp" + "?id=" + i + "&timestamp="+timestamp+"&sport="+sport);
 		chartHref.setAttribute("target", "_blank");
 		chartHref.appendChild(document.createTextNode(_data[i].result[0].awayTeam + "V.S" + _data[i].result[0].homeTeam+ "----Chart"));
 
@@ -69,7 +87,7 @@ function setgamelink(_data) {
 		tableHref.setAttribute("id",i+1);
 		tableHref.setAttribute("style","font-size:36px;");
 		tableHref.setAttribute("align", "center");
-		tableHref.setAttribute("href", "ShowMLBInfoTable.jsp" + "?id=" + i);
+		tableHref.setAttribute("href", "ShowHistoryInfoTable.jsp" + "?id=" + i + "&timestamp="+timestamp+"&sport="+sport);
 		tableHref.setAttribute("target", "_blank");
 		tableHref.appendChild(document.createTextNode(_data[i].result[0].awayTeam + "V.S" + _data[i].result[0].homeTeam+ "----Table"));
 

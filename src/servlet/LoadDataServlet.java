@@ -3,6 +3,9 @@ package servlet;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -28,12 +31,20 @@ public class LoadDataServlet extends HttpServlet{
 	private String today = "";
 	private boolean isspidering = false;
 	private Timer timer;
+	static Connection dbConn;
+	static final String DB_NAME = "pinnacledata";
+	static String home = System.getProperty("user.home");
+	static String os = System.getProperty("os.name");
+	static String path = home + File.separator + "project2Data" + File.separator;
+	private static String driverPath = "jdbc:sqlite:";
+	static final String driverName = "org.sqlite.JDBC";
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 		      throws ServletException, IOException {
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		String doAction = request.getParameter("doAction");
+
 		List<JSONObject> json= new ArrayList<JSONObject>();
 		if("loadData".equals(doAction)){
 			
@@ -43,7 +54,15 @@ public class LoadDataServlet extends HttpServlet{
 		} else if ("startGetData".equals(doAction)) {
 			System.out.println("startGetData");
 			if(!isspidering){
+//				try {
+//					Class.forName(driverName);
+//				} catch (ClassNotFoundException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
 				isspidering = true;
+//				GetMLBData.getdata();
+//				GetMLBData mlb = new GetMLBData();
 				timer = new Timer();
 				timer.schedule(new GetData(), 1000, 60000);
 				timer.schedule(new GetMLBData(), 1000, 60000);
@@ -80,15 +99,25 @@ public class LoadDataServlet extends HttpServlet{
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		String doAction = request.getParameter("doAction");
+
 		List<JSONObject> json= new ArrayList<JSONObject>();
 		if("loadData".equals(doAction)){
 			
 			//[Pony]0428-->Need to add datatype to separate which game????
-			json = loadData(request, response, request.getParameter("type"));
+			json = loadDBData(request, response, Integer.parseInt(request.getParameter("type")));
+			System.out.println("isSpidering = "+isspidering);
+			
+		} else if("loadHistoryData".equals(doAction)){
+			
+			//[Pony]0428-->Need to add datatype to separate which game????
+			json = loadHistoryData(request, response, Integer.parseInt(request.getParameter("type")),Long.parseLong(request.getParameter("timestamp")));
 			System.out.println("isSpidering = "+isspidering);
 		} else if ("startGetData".equals(doAction)) {
 			System.out.println("startGetData");
 			isspidering = true;
+			
+//			GetMLBData mlb = new GetMLBData();
+			
 			Timer timer = new Timer();
 			timer.schedule(new GetData(), 1000, 60000);
 			timer.schedule(new GetMLBData(), 1000, 60000);
@@ -122,6 +151,36 @@ public class LoadDataServlet extends HttpServlet{
 //			count++;
 			}
 			LoadData.Deletecloseddata(Filedirectory);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return rtnObj;
+	}
+	
+	public List<JSONObject> loadDBData(HttpServletRequest request, HttpServletResponse response,int type){
+		List<JSONObject> rtnObj= new ArrayList<JSONObject>();
+		JSONObject tmp;
+		try {
+			today = new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime());
+			String home = System.getProperty("user.home");
+			String path = home + File.separator + "project2Data" + File.separator;
+			rtnObj = LoadData.LoadDBData(type);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return rtnObj;
+	}
+	
+	public List<JSONObject> loadHistoryData(HttpServletRequest request, HttpServletResponse response,int type,long timestamp){
+		List<JSONObject> rtnObj= new ArrayList<JSONObject>();
+		JSONObject tmp;
+		try {
+			today = new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime());
+			String home = System.getProperty("user.home");
+			String path = home + File.separator + "project2Data" + File.separator;
+			rtnObj = LoadData.LoadHistoryData(type,timestamp);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

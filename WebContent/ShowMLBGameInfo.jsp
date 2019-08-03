@@ -65,7 +65,7 @@ function GetData() {
     	url: "/project2/LoadDataServlet.do",
     	data:{
     		doAction:"loadData",
-    		type:"MLB"
+    		type:"2"
     	},
         dataType: "json",
         async: false,
